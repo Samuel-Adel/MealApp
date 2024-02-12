@@ -1,0 +1,10 @@
+
+<resources>
+    <string name="app_name">MealApp</string>
+    <string name="findAndGet">Find and Get</string>
+    <string name="yourBest">Your Best</string>
+    <string name="meal">Meal</string>
+    <string name="getStarted">Get Started</string>
+    <string name="findTheMost">Find the most delicious recipes </string>
+
+</resources>
