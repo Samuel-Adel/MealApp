@@ -17,5 +17,7 @@
     <string name="dontHaveAnAccount">Don\'t have an account?</string>
     <string name="signin">Sign in</string>
     <string name="youCanConnectWith">You can connect with</string>
+    <string name="home">Home</string>
+    <string name="favourite">Favourite</string>
 
 </resources>
