@@ -20,18 +20,18 @@ public class HomeScreenPresenterImpl implements IHomeScreenPresenter, IHomeNetwo
     }
 
     @Override
-    public void getMealsByCategory() {
-
+    public void getMealsByCategory(Category category) {
+        homeScreenRepository.getMealsFilteredByCategory(this, category);
     }
 
     @Override
-    public void getMealsByCountry() {
-
+    public void getMealsByCountry(Country country) {
+        homeScreenRepository.getMealsFilteredByCountry(this, country);
     }
 
     @Override
-    public void getMealsByIngredient() {
-
+    public void getMealsByIngredient(Ingredient ingredient) {
+        homeScreenRepository.getMealsFilteredByIngredient(this, ingredient);
     }
 
     @Override
@@ -41,41 +41,47 @@ public class HomeScreenPresenterImpl implements IHomeScreenPresenter, IHomeNetwo
 
     @Override
     public void getCountries() {
-
+        homeScreenRepository.getCountries(this);
     }
 
     @Override
     public void getIngredients() {
+        homeScreenRepository.getIngredients(this);
+    }
 
+    @Override
+    public void addMealToFavourites(Meal meal) {
+        homeScreenRepository.addMealToFavourite(this, meal);
     }
 
     @Override
     public void onCategoriesSuccessfulCallBack(List<Category> categories) {
-        homeView.ShowFilterWithCategories(categories);
+        homeView.showFilterWithCategories(categories);
     }
 
     @Override
     public void onCountriesSuccessfulCallBack(List<Country> countries) {
-
+        homeView.showFilterWithCountries(countries);
     }
 
     @Override
     public void onIngredientsSuccessfulCallBack(List<Ingredient> ingredients) {
-
+        homeView.showFilterWithIngredients(ingredients);
     }
 
     @Override
     public void onMealsSuccessfulCallBack(List<Meal> meals) {
-
+        homeView.showFilteredMeals(meals);
     }
 
     @Override
     public void onFailureResult(String failureMsg) {
+        homeView.showErrorMessage(failureMsg);
 
     }
 
     @Override
     public void callInProgressStatus(boolean status) {
-
+        homeView.statusBarVisibilityStatus(status);
     }
 }

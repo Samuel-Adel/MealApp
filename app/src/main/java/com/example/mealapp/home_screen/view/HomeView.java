@@ -8,12 +8,15 @@ import com.example.mealapp.home_screen.model.Meal;
 import java.util.List;
 
 public interface HomeView {
-    public void ShowFilterWithCategories(List<Category> categoryList);
+    public void showFilterWithCategories(List<Category> categoryList);
 
-    public void ShowFilterWithCountries(List<Country> countries);
+    public void showFilterWithCountries(List<Country> countries);
 
-    public void ShowFilterWithIngredients(List<Ingredient> ingredients);
+    public void showFilterWithIngredients(List<Ingredient> ingredients);
 
-    public void ShowFilteredMeals(List<Meal> meals);
+    public void showFilteredMeals(List<Meal> meals);
+    public void showErrorMessage(String errorMessage);
+
+    public void statusBarVisibilityStatus(boolean isVisible);
 
 }

@@ -1,16 +1,20 @@
 package com.example.mealapp.home_screen.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 
 public class MealsList {
-    private ArrayList<Meal> meals;
-    private int total, skip,limit;
+    @SerializedName("meals")
 
-    public ArrayList<Meal> getProducts() {
+    private ArrayList<Meal> meals;
+    private int total, skip, limit;
+
+    public ArrayList<Meal> getMeals() {
         return meals;
     }
 
-    public void setProducts(ArrayList<Meal> products) {
+    public void setMeals(ArrayList<Meal> products) {
         this.meals = products;
     }
 

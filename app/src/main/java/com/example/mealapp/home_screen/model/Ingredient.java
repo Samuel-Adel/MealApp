@@ -1,8 +1,13 @@
 package com.example.mealapp.home_screen.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Ingredient implements FilterItem {
+    @SerializedName("idIngredient")
     private String id;
+    @SerializedName("strIngredient")
     private String name;
+    @SerializedName("strDescription")
     private String description;
 
     public Ingredient(String id, String name, String description) {

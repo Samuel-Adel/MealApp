@@ -4,8 +4,5 @@
         <!-- Customize your light theme here. -->
          <item name="colorPrimary">@color/anzac</item>
     </style>
-    <style name="Theme.MealApp" parent="Base.Theme.MealApp" />
-    <style name="ToolbarTitle" parent="TextAppearance.AppCompat.Large">
-        <item name="android:textStyle">bold</item>
-    </style>
+
 </resources>

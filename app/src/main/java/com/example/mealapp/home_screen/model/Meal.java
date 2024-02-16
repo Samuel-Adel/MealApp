@@ -1,14 +1,38 @@
 package com.example.mealapp.home_screen.model;
 
-public class Meal {
-    private String id;
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+@Entity(tableName = "meals")
+
+public class Meal {
+    @SerializedName("idMeal")
+    @PrimaryKey
+    @NonNull
+    private String id;
+    @SerializedName("strMeal")
+    @ColumnInfo(name = "name")
     private String name;
+    @SerializedName("strCategory")
+
+
     private String category;
+    @SerializedName("strArea")
+
     private String country;
+    @SerializedName("strInstructions")
+
     private String instructions;
+    @SerializedName("strMealThumb")
+
     private String imageLink;
+    @SerializedName("strYoutube")
+
     private String videoLink;
+
 
     public Meal(String id, String name, String category, String country,
                 String instructions, String imageLink, String videoLink) {

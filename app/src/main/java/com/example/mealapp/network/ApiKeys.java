@@ -8,12 +8,12 @@ import com.example.mealapp.home_screen.model.MealsList;
 
 import io.reactivex.rxjava3.core.Observable;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.Query;
 
 public interface ApiKeys {
     @GET("random.php")
     Observable<MealsList> getSingleRandomMeal();
+
     @GET("list.php?c=list")
     Observable<CategoryList> getCategories();
 
@@ -27,10 +27,10 @@ public interface ApiKeys {
     Observable<MealsList> getMealsBySearch(@Query("s") String query);
 
     @GET("list.php?a=list")
-    Observable<CountryList> getAreas();
+    Observable<CountryList> getCountries();
 
     @GET("filter.php")
-    Observable<MealsList> getMealsByArea(@Query("a") String area);
+    Observable<MealsList> getMealsByCountry(@Query("a") String area);
 
     @GET("list.php?i=list")
     Observable<IngredientList> getIngredients();

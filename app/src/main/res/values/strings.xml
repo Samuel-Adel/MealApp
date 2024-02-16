@@ -21,5 +21,11 @@
     <string name="favourite">Favourite</string>
     <string name="search">Search</string>
     <string name="BrowseByCategory">Browse By Category</string>
-
+    <string name="BrowseByCountry">Browse By Country</string>
+    <string name="BrowseByIngredient">Browse By Ingredient</string>
+    <string name="country">Country</string>
+    <string name="category">Category</string>
+    <string name="ingredient">Ingredient</string>
+    <string name="favMeals">Fav Meals</string>
+    <string name="yourFavMeals">Your Favourite Meals</string>
 </resources>

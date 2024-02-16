@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ToolbarTitle" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="PopupMenu" parent="@style/Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@color/mercury</item>
+        <item name="android:textColor">@color/tundora</item>
+    </style>
+</resources>

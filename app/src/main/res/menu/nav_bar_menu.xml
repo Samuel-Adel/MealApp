@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/item_1"
+        android:id="@+id/homeScreenFragment"
         android:enabled="true"
         android:icon="@drawable/home"
         android:title="@string/home"/>
     <item
-        android:id="@+id/item_2"
+        android:id="@+id/favMealsScreenFragment"
         android:enabled="true"
         android:icon="@drawable/favourite"
         android:title="@string/favourite"/>

@@ -1,6 +1,10 @@
 package com.example.mealapp.home_screen.model;
 
-public class Country implements FilterItem{
+import com.google.gson.annotations.SerializedName;
+
+public class Country implements FilterItem {
+    @SerializedName("strArea")
+
     private String name;
 
     public Country(String name) {

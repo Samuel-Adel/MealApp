@@ -72,11 +72,12 @@ public class LoginScreenFragment extends Fragment implements LoginView {
 
         );
         btnSignIn.setOnClickListener(v -> {
-            if (validateInputs(email.getText().toString(), password.getText().toString())) {
-                loginPresenter.loginWithUserCredentials(new UserCredentials(email.getText().toString(), password.getText().toString()));
-                Log.i(TAG, "User Email"+email.getText().toString());
-                Log.i(TAG, "User Password"+password.getText().toString());
-            }
+            loggedInSuccessfully("Developing Option");
+//            if (validateInputs(email.getText().toString(), password.getText().toString())) {
+//                loginPresenter.loginWithUserCredentials(new UserCredentials(email.getText().toString(), password.getText().toString()));
+//                Log.i(TAG, "User Email"+email.getText().toString());
+//                Log.i(TAG, "User Password"+password.getText().toString());
+//            }
 
         });
 
