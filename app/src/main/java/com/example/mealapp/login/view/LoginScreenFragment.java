@@ -1,5 +1,6 @@
 package com.example.mealapp.login.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.mealapp.HomeActivity;
 import com.example.mealapp.R;
 import com.example.mealapp.login.model.ILoginRepository;
 import com.example.mealapp.login.model.LoginRepository;
@@ -101,6 +103,10 @@ public class LoginScreenFragment extends Fragment implements LoginView {
     @Override
     public void loggedInSuccessfully(String loggedInSuccessfullyMessage) {
         Toast.makeText(getContext(), loggedInSuccessfullyMessage, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getActivity(), HomeActivity.class);
+        startActivity(intent);
+//// Finish the current activity to prevent returning to it when pressing back
+//        getActivity().finish();
     }
 
     @Override
