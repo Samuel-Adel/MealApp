@@ -21,7 +21,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mealapp.HomeActivity;
 import com.example.mealapp.R;
 import com.example.mealapp.db.FavMealsLocalDataSourceImpl;
 import com.example.mealapp.db.IFavMealsLocalDataSource;
@@ -34,7 +33,7 @@ import com.example.mealapp.home_screen.model.Meal;
 import com.example.mealapp.home_screen.network.HomeRemoteDataSourceImpl;
 import com.example.mealapp.home_screen.network.IHomeRemoteDataSource;
 import com.example.mealapp.home_screen.presenter.HomeScreenPresenterImpl;
-import com.example.mealapp.meal_details.MealDetailsFragment;
+import com.example.mealapp.meal_details.MealDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -149,7 +148,7 @@ public class HomeScreenFragment extends Fragment implements OnFilterItemClickLis
     @Override
     public void showMealDetails(Meal meal) {
         Toast.makeText(getContext(), meal.getId(), Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(getActivity(), MealDetailsFragment.class);
+        Intent intent = new Intent(getActivity(), MealDetailsActivity.class);
         startActivity(intent);
         //// Finish the current activity to prevent returning to it when pressing back
 //        getActivity().finish();

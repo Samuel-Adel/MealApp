@@ -8,4 +8,7 @@
         <item name="android:popupBackground">@color/mercury</item>
         <item name="android:textColor">@color/tundora</item>
     </style>
+    <style name="AppTheme.NoActionBar" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/anzac</item>
+    </style>
 </resources>
