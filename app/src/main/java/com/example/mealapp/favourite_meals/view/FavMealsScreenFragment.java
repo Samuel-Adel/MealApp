@@ -67,8 +67,11 @@ public class FavMealsScreenFragment extends Fragment implements FavScreenView, o
         favScreenPresenter = new FavScreenPresenterImpl(favMealsRepository, this);
         favMealsAdapter = new FavMealsAdapter(getActivity().getApplicationContext(), new ArrayList<>(), this);
         RecyclerView recyclerViewFavMeals = view.findViewById(R.id.recyclerFavMeals);
+        recyclerViewFavMeals.setNestedScrollingEnabled(false);
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(view.getContext(), 2);
         gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
+
         recyclerViewFavMeals.setLayoutManager(gridLayoutManager);
         recyclerViewFavMeals.setAdapter(favMealsAdapter);
         favScreenPresenter.getAllFavouriteMeals();
