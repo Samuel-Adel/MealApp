@@ -1,5 +1,6 @@
 package com.example.mealapp.favourite_meals.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.example.mealapp.favourite_meals.presenter.FavScreenPresenterImpl;
 import com.example.mealapp.favourite_meals.presenter.IFavScreenPresenter;
 import com.example.mealapp.home_screen.model.Meal;
 import com.example.mealapp.home_screen.view.HomeScreenMealsAdapter;
+import com.example.mealapp.meal_details.view.MealDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,5 +90,12 @@ public class FavMealsScreenFragment extends Fragment implements FavScreenView, o
         favScreenPresenter.removeMealFromFavourite(meal);
         Toast.makeText(getContext(), "Removed from favourite", Toast.LENGTH_SHORT).show();
 
+    }
+
+    @Override
+    public void showMealDetails(Meal meal) {
+        Intent intent = new Intent(getActivity(), MealDetailsActivity.class);
+        intent.putExtra("meal_id", meal.getId());
+        startActivity(intent);
     }
 }

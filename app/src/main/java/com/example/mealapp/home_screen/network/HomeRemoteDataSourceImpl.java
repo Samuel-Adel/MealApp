@@ -20,7 +20,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeRemoteDataSourceImpl implements IHomeRemoteDataSource {
-    private static final String TAG = "ProductClient";
+    private static final String TAG = "HomeScreenRemoteDataSource";
     private static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
     public static HomeRemoteDataSourceImpl instance = null;
     private ApiKeys apiKeys;
@@ -51,7 +51,7 @@ public class HomeRemoteDataSourceImpl implements IHomeRemoteDataSource {
         categoryListObservable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 item -> {
                     networkCallBacks.callInProgressStatus(false);
-                    Log.i(TAG, "onResponse: " + item.getMeals().get(1).getName());
+//                    Log.i(TAG, "onResponse: " + item.getMeals().get(0).getName());
                     networkCallBacks.onMealsSuccessfulCallBack(item.getMeals());
                 },
                 error -> {
@@ -70,7 +70,7 @@ public class HomeRemoteDataSourceImpl implements IHomeRemoteDataSource {
         categoryListObservable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 item -> {
                     networkCallBacks.callInProgressStatus(false);
-                    Log.i(TAG, "onResponse: " + item.getMeals().get(1).getName());
+//                    Log.i(TAG, "onResponse: " + item.getMeals().get(0).getName());
                     networkCallBacks.onMealsSuccessfulCallBack(item.getMeals());
                 },
                 error -> {
@@ -90,7 +90,7 @@ public class HomeRemoteDataSourceImpl implements IHomeRemoteDataSource {
         categoryListObservable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 item -> {
                     networkCallBacks.callInProgressStatus(false);
-                    Log.i(TAG, "onResponse: " + item.getMeals().get(1).getName());
+//                    Log.i(TAG, "onResponse: " + item.getMeals().get(0).getName());
                     networkCallBacks.onMealsSuccessfulCallBack(item.getMeals());
                 },
                 error -> {
@@ -109,7 +109,7 @@ public class HomeRemoteDataSourceImpl implements IHomeRemoteDataSource {
         categoryListObservable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 item -> {
                     networkCallBacks.callInProgressStatus(false);
-                    Log.i(TAG, "onResponse: " + item.getCategories().get(1).getName());
+//                    Log.i(TAG, "onResponse: " + item.getCategories().get(0).getName());
                     networkCallBacks.onCategoriesSuccessfulCallBack(item.getCategories());
                 },
                 error -> {
@@ -128,7 +128,7 @@ public class HomeRemoteDataSourceImpl implements IHomeRemoteDataSource {
 
                 item -> {
                     networkCallBacks.callInProgressStatus(false);
-                    Log.i(TAG, "onResponse: " + item.getCountries().get(1).getName());
+//                    Log.i(TAG, "onResponse: " + item.getCountries().get(0).getName());
                     networkCallBacks.onCountriesSuccessfulCallBack(item.getCountries());
                 },
                 error -> {
@@ -146,7 +146,7 @@ public class HomeRemoteDataSourceImpl implements IHomeRemoteDataSource {
         categoryListObservable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(
                 item -> {
                     networkCallBacks.callInProgressStatus(false);
-                    Log.i(TAG, "onResponse: " + item.getIngredients().get(1).getName());
+//                    Log.i(TAG, "onResponse: " + item.getIngredients().get(0).getName());
                     networkCallBacks.onIngredientsSuccessfulCallBack(item.getIngredients());
                 },
                 error -> {

@@ -60,13 +60,13 @@ public class FavMealsAdapter  extends RecyclerView.Adapter<FavMealsAdapter.ViewH
     public void onBindViewHolder(@NonNull FavMealsAdapter.ViewHolder holder, int position) {
         Glide.with(context).load(meals.get(position).getImageLink()).override(120,120).transform(new RoundedCorners(10)).centerCrop().into(holder.mealImage);
         holder.mealName.setText(meals.get(position).getName());
-        holder.favIcon.setImageResource(R.drawable.add_to_fav);
+        holder.favIcon.setImageResource(R.drawable.remove_from_fav);
         holder.favIcon.setOnClickListener(v -> {
             onFavScreenClickListener.removeFromFavItems(meals.get(position));
         });
-//        holder.cardView.setOnClickListener(v -> {
-//            onFilterItemClickListener.showMealDetails(meals.get(position));
-//        });
+        holder.cardView.setOnClickListener(v -> {
+            onFavScreenClickListener.showMealDetails(meals.get(position));
+        });
 
     }
 

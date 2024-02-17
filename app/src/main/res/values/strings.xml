@@ -28,4 +28,6 @@
     <string name="ingredient">Ingredient</string>
     <string name="favMeals">Fav Meals</string>
     <string name="yourFavMeals">Your Favourite Meals</string>
+    <string name="instructions">Instructions</string>
+    <string name="video">Video</string>
 </resources>

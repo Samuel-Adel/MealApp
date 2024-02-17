@@ -33,7 +33,7 @@ import com.example.mealapp.home_screen.model.Meal;
 import com.example.mealapp.home_screen.network.HomeRemoteDataSourceImpl;
 import com.example.mealapp.home_screen.network.IHomeRemoteDataSource;
 import com.example.mealapp.home_screen.presenter.HomeScreenPresenterImpl;
-import com.example.mealapp.meal_details.MealDetailsActivity;
+import com.example.mealapp.meal_details.view.MealDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -149,6 +149,7 @@ public class HomeScreenFragment extends Fragment implements OnFilterItemClickLis
     public void showMealDetails(Meal meal) {
         Toast.makeText(getContext(), meal.getId(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getActivity(), MealDetailsActivity.class);
+        intent.putExtra("meal_id", meal.getId());
         startActivity(intent);
         //// Finish the current activity to prevent returning to it when pressing back
 //        getActivity().finish();

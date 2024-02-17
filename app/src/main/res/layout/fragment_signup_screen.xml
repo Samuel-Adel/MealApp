@@ -60,31 +60,32 @@
         app:layout_constraintTop_toBottomOf="@+id/appName" />
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editEmailAddressLayout"
-        android:layout_width="315dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toStartOf="@+id/emailText"
-        app:layout_constraintTop_toBottomOf="@+id/emailText"
-        tools:ignore="ExtraText">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editEmailAddressLayout"
+            android:layout_width="315dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/emailText"
+            app:layout_constraintTop_toBottomOf="@+id/emailText"
+            tools:ignore="ExtraText">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextEmailAddress"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/edit_text_shape"
-            android:drawableStart="@drawable/email_icon"
-            android:drawablePadding="12dp"
-            android:ems="10"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:hint="@string/enterYourEmail"
-            android:inputType="textEmailAddress"
-            android:imeOptions="actionNext"
-            android:nextFocusForward="@id/editTextPassword"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/edit_text_shape"
+                android:drawableStart="@drawable/email_icon"
+                android:drawablePadding="12dp"
+                android:ems="10"
+                android:hint="@string/enterYourEmail"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:nextFocusForward="@id/editTextPassword"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/passwordText"
@@ -99,31 +100,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editEmailAddressLayout" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editPasswordLayout"
-        android:layout_width="315dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toStartOf="@+id/passwordText"
-        app:layout_constraintTop_toBottomOf="@+id/passwordText"
-        tools:ignore="ExtraText">
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editPasswordLayout"
+            android:layout_width="315dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/passwordText"
+            app:layout_constraintTop_toBottomOf="@+id/passwordText"
+            tools:ignore="ExtraText">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextPassword"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/edit_text_shape"
-            android:drawableStart="@drawable/passord_icon"
-            android:drawablePadding="12dp"
-            android:ems="10"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:hint="@string/enterYourPassword"
-            android:inputType="textPassword"
-            android:imeOptions="actionNext"
-            android:nextFocusForward="@id/editTextConfirmPassword"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/edit_text_shape"
+                android:drawableStart="@drawable/passord_icon"
+                android:drawablePadding="12dp"
+                android:ems="10"
+                android:hint="@string/enterYourPassword"
+                android:imeOptions="actionNext"
+                android:inputType="textPassword"
+                android:nextFocusForward="@id/editTextConfirmPassword"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/confirmPasswordText"
@@ -137,30 +139,32 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editPasswordLayout" />
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/editConfirmPasswordLayout"
-        android:layout_width="315dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toStartOf="@+id/confirmPasswordText"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordText"
-        tools:ignore="ExtraText">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextConfirmPassword"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/edit_text_shape"
-            android:drawableStart="@drawable/passord_icon"
-            android:drawablePadding="12dp"
-            android:ems="10"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:hint="@string/enterYourPassword"
-            android:inputType="textPassword"
-            android:imeOptions="actionDone"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editConfirmPasswordLayout"
+            android:layout_width="315dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="50dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/confirmPasswordText"
+            app:layout_constraintTop_toBottomOf="@+id/confirmPasswordText"
+            tools:ignore="ExtraText">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextConfirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/edit_text_shape"
+                android:drawableStart="@drawable/passord_icon"
+                android:drawablePadding="12dp"
+                android:ems="10"
+                android:hint="@string/enterYourPassword"
+                android:imeOptions="actionDone"
+                android:inputType="textPassword"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     <View
         android:id="@+id/divider"

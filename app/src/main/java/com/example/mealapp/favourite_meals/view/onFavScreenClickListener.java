@@ -4,4 +4,5 @@ import com.example.mealapp.home_screen.model.Meal;
 
 public interface onFavScreenClickListener {
     public void removeFromFavItems(Meal meal);
+    public void showMealDetails(Meal meal);
 }
