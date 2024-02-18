@@ -6,6 +6,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
+
 @Entity(tableName = "meals")
 
 public class Meal {
@@ -32,8 +33,10 @@ public class Meal {
     @SerializedName("strYoutube")
 
     private String videoLink;
-
-
+    @ColumnInfo(name = "mealDay")
+    private String mealDay;
+    @ColumnInfo(name = "isFavorite")
+    private boolean isFavorite;
     public Meal(String id, String name, String category, String country,
                 String instructions, String imageLink, String videoLink) {
         this.id = id;
@@ -45,6 +48,21 @@ public class Meal {
         this.videoLink = videoLink;
     }
 
+    public String getMealDay() {
+        return mealDay;
+    }
+
+    public void setMealDay(String mealDay) {
+        this.mealDay = mealDay;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
+    }
     public String getId() {
         return id;
     }

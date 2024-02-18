@@ -1,6 +1,6 @@
 package com.example.mealapp.favourite_meals.model;
 
-import com.example.mealapp.db.IFavMealsLocalDataSource;
+import com.example.mealapp.db.IMealsLocalDataBase;
 import com.example.mealapp.home_screen.model.Meal;
 
 import java.util.List;
@@ -8,17 +8,17 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Flowable;
 
 public class FavMealsRepositoryImpl implements IFavMealsRepository {
-    private IFavMealsLocalDataSource favMealsLocalDataSource;
+    private IMealsLocalDataBase favMealsLocalDataSource;
     private static FavMealsRepositoryImpl instance = null;
 
-    public static FavMealsRepositoryImpl getInstance(IFavMealsLocalDataSource localDataSource) {
+    public static FavMealsRepositoryImpl getInstance(IMealsLocalDataBase localDataSource) {
         if (instance == null) {
             instance = new FavMealsRepositoryImpl(localDataSource);
         }
         return instance;
     }
 
-    private FavMealsRepositoryImpl(IFavMealsLocalDataSource localDataSource) {
+    private FavMealsRepositoryImpl(IMealsLocalDataBase localDataSource) {
         this.favMealsLocalDataSource = localDataSource;
     }
 

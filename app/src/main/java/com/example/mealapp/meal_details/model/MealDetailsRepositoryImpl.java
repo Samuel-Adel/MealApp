@@ -1,23 +1,23 @@
 package com.example.mealapp.meal_details.model;
 
-import com.example.mealapp.db.IFavMealsLocalDataSource;
+import com.example.mealapp.db.IMealsLocalDataBase;
 import com.example.mealapp.home_screen.model.Meal;
 import com.example.mealapp.meal_details.network.IMealDetailsNetworkCallBack;
 import com.example.mealapp.meal_details.network.IMealDetailsRemoteDataSource;
 
 public class MealDetailsRepositoryImpl implements IMealDetailsRepository {
     private IMealDetailsRemoteDataSource mealDetailsRemoteDataSource;
-    private IFavMealsLocalDataSource favMealsLocalDataSource;
+    private IMealsLocalDataBase favMealsLocalDataSource;
     private static MealDetailsRepositoryImpl instance = null;
 
-    public static MealDetailsRepositoryImpl getInstance(IMealDetailsRemoteDataSource remoteDataSource, IFavMealsLocalDataSource favMealsLocalDataSource) {
+    public static MealDetailsRepositoryImpl getInstance(IMealDetailsRemoteDataSource remoteDataSource, IMealsLocalDataBase favMealsLocalDataSource) {
         if (instance == null) {
             instance = new MealDetailsRepositoryImpl(remoteDataSource, favMealsLocalDataSource);
         }
         return instance;
     }
 
-    private MealDetailsRepositoryImpl(IMealDetailsRemoteDataSource remoteDataSource, IFavMealsLocalDataSource favMealsLocalDataSource) {
+    private MealDetailsRepositoryImpl(IMealDetailsRemoteDataSource remoteDataSource, IMealsLocalDataBase favMealsLocalDataSource) {
         this.mealDetailsRemoteDataSource = remoteDataSource;
         this.favMealsLocalDataSource = favMealsLocalDataSource;
     }

@@ -15,14 +15,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.mealapp.R;
-import com.example.mealapp.db.FavMealsLocalDataSourceImpl;
-import com.example.mealapp.db.IFavMealsLocalDataSource;
+import com.example.mealapp.db.MealsLocalDataBaseImpl;
+import com.example.mealapp.db.IMealsLocalDataBase;
 import com.example.mealapp.favourite_meals.model.FavMealsRepositoryImpl;
 import com.example.mealapp.favourite_meals.model.IFavMealsRepository;
 import com.example.mealapp.favourite_meals.presenter.FavScreenPresenterImpl;
 import com.example.mealapp.favourite_meals.presenter.IFavScreenPresenter;
 import com.example.mealapp.home_screen.model.Meal;
-import com.example.mealapp.home_screen.view.HomeScreenMealsAdapter;
 import com.example.mealapp.meal_details.view.MealDetailsActivity;
 
 import java.util.ArrayList;
@@ -62,7 +61,7 @@ public class FavMealsScreenFragment extends Fragment implements FavScreenView, o
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        IFavMealsLocalDataSource favMealsLocalDataSource = FavMealsLocalDataSourceImpl.getInstance(getActivity().getApplicationContext());
+        IMealsLocalDataBase favMealsLocalDataSource = MealsLocalDataBaseImpl.getInstance(getActivity().getApplicationContext());
         IFavMealsRepository favMealsRepository = FavMealsRepositoryImpl.getInstance(favMealsLocalDataSource);
         favScreenPresenter = new FavScreenPresenterImpl(favMealsRepository, this);
         favMealsAdapter = new FavMealsAdapter(getActivity().getApplicationContext(), new ArrayList<>(), this);

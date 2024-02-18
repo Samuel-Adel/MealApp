@@ -15,4 +15,9 @@
         android:name="com.example.mealapp.favourite_meals.view.FavMealsScreenFragment"
         android:label="FavMeal"
         tools:layout="@layout/fragment_fav_meals_screen" />
+    <fragment
+        android:id="@+id/mealsPlanFragment"
+        android:name="com.example.mealapp.meal_plans.view.MealsPlanFragment"
+        android:label="Plans"
+        tools:layout="@layout/fragment_meals_plan" />
 </navigation>

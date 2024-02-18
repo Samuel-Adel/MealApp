@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MealApp</string>
+    <string name="app_name">XFood</string>
     <string name="findAndGet">Find and Get</string>
     <string name="yourBest">Your Best</string>
     <string name="meal">Meal</string>
@@ -30,4 +30,12 @@
     <string name="yourFavMeals">Your Favourite Meals</string>
     <string name="instructions">Instructions</string>
     <string name="video">Video</string>
+    <string name="plans">Plans</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
 </resources>

@@ -1,23 +1,22 @@
 package com.example.mealapp.home_screen.model;
 
-import com.example.mealapp.db.IFavMealsLocalDataSource;
+import com.example.mealapp.db.IMealsLocalDataBase;
 import com.example.mealapp.home_screen.network.IHomeNetworkCallBacks;
 import com.example.mealapp.home_screen.network.IHomeRemoteDataSource;
-import com.example.mealapp.network.NetworkCallBacks;
 
 public class HomeScreenRepositoryImpl implements IHomeScreenRepository {
-    private IHomeRemoteDataSource homeRemoteDataSource;
-    private IFavMealsLocalDataSource favMealsLocalDataSource;
+    private final IHomeRemoteDataSource homeRemoteDataSource;
+    private final IMealsLocalDataBase favMealsLocalDataSource;
     private static HomeScreenRepositoryImpl instance = null;
 
-    public static HomeScreenRepositoryImpl getInstance(IHomeRemoteDataSource remoteDataSource,IFavMealsLocalDataSource favMealsLocalDataSource) {
+    public static HomeScreenRepositoryImpl getInstance(IHomeRemoteDataSource remoteDataSource, IMealsLocalDataBase favMealsLocalDataSource) {
         if (instance == null) {
             instance = new HomeScreenRepositoryImpl(remoteDataSource,favMealsLocalDataSource);
         }
         return instance;
     }
 
-    private HomeScreenRepositoryImpl(IHomeRemoteDataSource remoteDataSource,IFavMealsLocalDataSource favMealsLocalDataSource) {
+    private HomeScreenRepositoryImpl(IHomeRemoteDataSource remoteDataSource, IMealsLocalDataBase favMealsLocalDataSource) {
         this.homeRemoteDataSource = remoteDataSource;
         this.favMealsLocalDataSource = favMealsLocalDataSource;
     }

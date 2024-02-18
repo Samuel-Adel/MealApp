@@ -2,8 +2,6 @@ package com.example.mealapp.meal_details.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,13 +11,12 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.example.mealapp.R;
-import com.example.mealapp.db.FavMealsLocalDataSourceImpl;
-import com.example.mealapp.db.IFavMealsLocalDataSource;
+import com.example.mealapp.db.MealsLocalDataBaseImpl;
+import com.example.mealapp.db.IMealsLocalDataBase;
 import com.example.mealapp.home_screen.model.Meal;
 import com.example.mealapp.meal_details.model.IMealDetailsRepository;
 import com.example.mealapp.meal_details.model.MealDetailsRepositoryImpl;
@@ -53,7 +50,7 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
         backButtonImgView.setOnClickListener(v -> finish());
         String mealId = getIntent().getStringExtra("meal_id");
         progressBar = findViewById(R.id.detailsMealProgressBar);
-        IFavMealsLocalDataSource favMealsLocalDataSource = FavMealsLocalDataSourceImpl.getInstance(this);
+        IMealsLocalDataBase favMealsLocalDataSource = MealsLocalDataBaseImpl.getInstance(this);
         IMealDetailsRemoteDataSource mealDetailsRemoteDataSource = MealDetailsRemoteDataSourceImpl.getInstance();
         IMealDetailsRepository mealDetailsRepository = MealDetailsRepositoryImpl.getInstance(mealDetailsRemoteDataSource, favMealsLocalDataSource);
         mealDetailsPresenter = new MealDetailsPresenterImpl(mealDetailsRepository, this);

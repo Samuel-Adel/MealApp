@@ -22,8 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mealapp.R;
-import com.example.mealapp.db.FavMealsLocalDataSourceImpl;
-import com.example.mealapp.db.IFavMealsLocalDataSource;
+import com.example.mealapp.db.MealsLocalDataBaseImpl;
+import com.example.mealapp.db.IMealsLocalDataBase;
 import com.example.mealapp.home_screen.model.Category;
 import com.example.mealapp.home_screen.model.Country;
 import com.example.mealapp.home_screen.model.HomeScreenRepositoryImpl;
@@ -75,7 +75,7 @@ public class HomeScreenFragment extends Fragment implements OnFilterItemClickLis
         homeScreenCategoryAdapter = new HomeScreenFilterAdapter<>(getActivity().getApplicationContext(), new ArrayList<>(), this);
         homeScreenCountryAdapter = new HomeScreenFilterAdapter<>(getActivity().getApplicationContext(), new ArrayList<>(), this);
         homeScreenIngredientAdapter = new HomeScreenFilterAdapter<>(getActivity().getApplicationContext(), new ArrayList<>(), this);
-        IFavMealsLocalDataSource favMealsLocalDataSource = FavMealsLocalDataSourceImpl.getInstance(getActivity().getApplicationContext());
+        IMealsLocalDataBase favMealsLocalDataSource = MealsLocalDataBaseImpl.getInstance(getActivity().getApplicationContext());
         IHomeRemoteDataSource homeRemoteDataSource = HomeRemoteDataSourceImpl.getInstance();
         IHomeScreenRepository homeScreenRepository = HomeScreenRepositoryImpl.getInstance(homeRemoteDataSource, favMealsLocalDataSource);
         homeScreenPresenter = new HomeScreenPresenterImpl(homeScreenRepository, this);
