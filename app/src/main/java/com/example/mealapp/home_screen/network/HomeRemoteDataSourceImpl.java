@@ -40,9 +40,9 @@ public class HomeRemoteDataSourceImpl implements IHomeRemoteDataSource {
     }
 
     private HomeRemoteDataSourceImpl(Context context) {
-        this.context=context;
-        int size = 10*1024*1024;
-        Cache cache = new Cache(this.context.getCacheDir(),size);
+        this.context = context;
+        int size = 10 * 1024 * 1024;
+        Cache cache = new Cache(this.context.getCacheDir(), size);
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .cache(cache)
                 .build();
@@ -66,12 +66,12 @@ public class HomeRemoteDataSourceImpl implements IHomeRemoteDataSource {
                 item -> {
                     networkCallBacks.callInProgressStatus(false);
 //                    Log.i(TAG, "onResponse: " + item.getMeals().get(0).getName());
-                    networkCallBacks.onMealsSuccessfulCallBack(item.getMeals()==null?new ArrayList<>():item.getMeals());
+                    networkCallBacks.onMealsSuccessfulCallBack(item.getMeals() == null ? new ArrayList<>() : item.getMeals());
                 },
                 error -> {
                     networkCallBacks.callInProgressStatus(false);
                     Log.i(TAG, "onFailure: " + error.getMessage());
-                    networkCallBacks.onFailureResult(error.getMessage());
+                    networkCallBacks.onFailureResult("There is no network");
                 }
         );
     }
@@ -85,12 +85,12 @@ public class HomeRemoteDataSourceImpl implements IHomeRemoteDataSource {
                 item -> {
                     networkCallBacks.callInProgressStatus(false);
 //                    Log.i(TAG, "onResponse: " + item.getMeals().get(0).getName());
-                    networkCallBacks.onMealsSuccessfulCallBack(item.getMeals()==null?new ArrayList<>():item.getMeals());
+                    networkCallBacks.onMealsSuccessfulCallBack(item.getMeals() == null ? new ArrayList<>() : item.getMeals());
                 },
                 error -> {
                     networkCallBacks.callInProgressStatus(false);
                     Log.i(TAG, "onFailure: " + error.getMessage());
-                    networkCallBacks.onFailureResult(error.getMessage());
+                    networkCallBacks.onFailureResult("There is no network");
                 }
         );
 
@@ -105,12 +105,12 @@ public class HomeRemoteDataSourceImpl implements IHomeRemoteDataSource {
                 item -> {
                     networkCallBacks.callInProgressStatus(false);
 //                    Log.i(TAG, "onResponse: " + item.getMeals().get(0).getName());
-                    networkCallBacks.onMealsSuccessfulCallBack(item.getMeals()==null?new ArrayList<>():item.getMeals());
+                    networkCallBacks.onMealsSuccessfulCallBack(item.getMeals() == null ? new ArrayList<>() : item.getMeals());
                 },
                 error -> {
                     networkCallBacks.callInProgressStatus(false);
                     Log.i(TAG, "onFailure: " + error.getMessage());
-                    networkCallBacks.onFailureResult(error.getMessage());
+                    networkCallBacks.onFailureResult("There is no network");
                 }
         );
     }
@@ -129,7 +129,7 @@ public class HomeRemoteDataSourceImpl implements IHomeRemoteDataSource {
                 error -> {
                     networkCallBacks.callInProgressStatus(false);
                     Log.i(TAG, "onFailure: " + error.getMessage());
-                    networkCallBacks.onFailureResult(error.getMessage());
+                    networkCallBacks.onFailureResult("There is no network");
                 }
         );
     }
@@ -148,7 +148,7 @@ public class HomeRemoteDataSourceImpl implements IHomeRemoteDataSource {
                 error -> {
                     networkCallBacks.callInProgressStatus(false);
                     Log.i(TAG, "onFailure: " + error.getMessage());
-                    networkCallBacks.onFailureResult(error.getMessage());
+                    networkCallBacks.onFailureResult("There is no network");
                 }
         );
     }
@@ -166,7 +166,7 @@ public class HomeRemoteDataSourceImpl implements IHomeRemoteDataSource {
                 error -> {
                     networkCallBacks.callInProgressStatus(false);
                     Log.i(TAG, "onFailure: " + error.getMessage());
-                    networkCallBacks.onFailureResult(error.getMessage());
+                    networkCallBacks.onFailureResult("There is no network");
                 }
         );
     }
