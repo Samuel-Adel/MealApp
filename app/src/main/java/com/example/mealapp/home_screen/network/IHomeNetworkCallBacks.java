@@ -7,6 +7,8 @@ import com.example.mealapp.home_screen.model.Meal;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Flowable;
+
 public interface IHomeNetworkCallBacks {
     public void onCategoriesSuccessfulCallBack(List<Category> categories);
     public void onCountriesSuccessfulCallBack(List<Country> countries);
@@ -15,4 +17,5 @@ public interface IHomeNetworkCallBacks {
 
     public void onFailureResult(String failureMsg);
     public void callInProgressStatus(boolean status);
+
 }

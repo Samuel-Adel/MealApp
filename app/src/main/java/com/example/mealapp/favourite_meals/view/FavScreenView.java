@@ -8,4 +8,5 @@ import io.reactivex.rxjava3.core.Flowable;
 
 public interface FavScreenView {
     public void showStoredMeals(Flowable<List<Meal>> meals);
+
 }

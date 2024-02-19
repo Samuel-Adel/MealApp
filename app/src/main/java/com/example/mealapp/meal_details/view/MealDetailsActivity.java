@@ -28,9 +28,15 @@ import com.example.mealapp.meal_details.presenter.MealDetailsPresenterImpl;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
+
 public class MealDetailsActivity extends AppCompatActivity implements MealDetailsView {
     private IMealDetailsPresenter mealDetailsPresenter;
     private WebView videoView;
+    private ImageView addToFavImgBtn;
+    private ImageView isPlannedImageView;
     private ImageView mealImage;
     private TextView mealName;
     private TextView mealCountry;
@@ -41,6 +47,7 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
     private ProgressBar progressBar;
     private Meal meal;
     private boolean isLoaded = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +62,8 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
         IMealDetailsRepository mealDetailsRepository = MealDetailsRepositoryImpl.getInstance(mealDetailsRemoteDataSource, favMealsLocalDataSource);
         mealDetailsPresenter = new MealDetailsPresenterImpl(mealDetailsRepository, this);
         mealDetailsPresenter.getMealDetails(mealId);
-        ImageView addToFavImgBtn = findViewById(R.id.addToFavImageView);
+        addToFavImgBtn = findViewById(R.id.addToFavImageView);
+        isPlannedImageView = findViewById(R.id.addToPlansDetailsImgView);
         mealImage = findViewById(R.id.detailImageView);
         mealName = findViewById(R.id.detailMealName);
         mealInstructions = findViewById(R.id.detailMealInstructions);
@@ -66,8 +74,8 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
         country = findViewById(R.id.detailCountryTextView);
         addToFavImgBtn.setOnClickListener(v -> {
             if (isLoaded) {
-                mealDetailsPresenter.addMealToFav(meal);
-                Toast.makeText(this, meal.getName() + " added to Favourite", Toast.LENGTH_SHORT).show();
+                addOrRemove();
+                //   mealDetailsPresenter.checkToAddOrRemoveMealFromFav(meal);
             }
         });
 
@@ -77,7 +85,6 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
     @Override
     public void showMealDetail(Meal meal) {
         this.meal = meal;
-        isLoaded = true;
         Glide.with(this).load(meal.getImageLink()).transform(new RoundedCorners(10)).centerCrop().into(mealImage);
         mealName.setText(meal.getName());
         mealCountry.setText(meal.getCountry());
@@ -85,6 +92,8 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
         video.setText(R.string.video);
         country.setText(R.string.country);
         instructions.setText(R.string.instructions);
+        Log.i("Meal Details", "showMealDetail: fav or not " + meal.isFav());
+        mealDetailsPresenter.checkIfMealIsFav(meal);
         String videoId = extractVideoId(meal.getVideoLink());
         Log.i("MealYoutueVideo", "showMealDetail: " + meal.getVideoLink());
         String embedUrl = "https://www.youtube.com/embed/" + videoId;
@@ -122,4 +131,40 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
             progressBar.setVisibility(View.GONE);
         }
     }
+
+    @Override
+    public void showIfMealISFav(Flowable<Boolean> isFav) {
+        isLoaded = true;
+        isFav.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(item -> {
+            meal.setFav(item.booleanValue());
+            Log.i("Meal Details", "showMealDetail: fav or not " + item.booleanValue());
+            if (item.booleanValue() == true) {
+                addToFavImgBtn.setImageResource(R.drawable.remove_from_fav);
+            }
+        });
+    }
+
+    private void addOrRemove() {
+        if (meal.isFav()) {
+            mealDetailsPresenter.removeMealFromFav(meal);
+            addToFavImgBtn.setImageResource(R.drawable.add_to_fav);
+            Toast.makeText(this, "Meal removed from Favourites", Toast.LENGTH_SHORT).show();
+            meal.setFav(false);
+        } else {
+            mealDetailsPresenter.addMealToFav(meal);
+            addToFavImgBtn.setImageResource(R.drawable.remove_from_fav);
+            Toast.makeText(this, "Meal added to Favourite", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void showIfMealIsPlanned(Flowable<Boolean> isPlanned) {
+        isPlanned.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(item -> {
+
+                }
+
+        );
+    }
+
+
 }

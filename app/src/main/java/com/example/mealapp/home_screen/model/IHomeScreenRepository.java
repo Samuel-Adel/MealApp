@@ -14,7 +14,7 @@ public interface IHomeScreenRepository {
     public void getMealsFilteredByCountry(IHomeNetworkCallBacks networkCallBacks, Country country);
 
     public void getMealsFilteredByIngredient(IHomeNetworkCallBacks networkCallBacks, Ingredient ingredient);
-    public void addMealToFavourite(IHomeNetworkCallBacks networkCallBacks, Meal meal);
+    public void addMealToFavourite(Meal meal);
 
 
 }

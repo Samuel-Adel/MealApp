@@ -10,4 +10,5 @@ public interface IFavMealsRepository {
     public void deleteMeal(Meal product);
 
     public Flowable<List<Meal>> getStoredMeals();
+    public Flowable<Boolean> checkIfFavOrNot(Meal meal);
 }

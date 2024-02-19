@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,8 +36,7 @@ public class MealsPlanFragment extends Fragment implements MealPlansView {
 
     private IMealPlansPresenter mealPlansPresenter;
     private TextView randomMealName;
-    private ImageView addToFavImgView;
-    private ImageView addToPlanImgView;
+    private Button addToFavBtn;
     private ImageView randomMealImg;
     private boolean isLoaded = false;
     private Meal meal;
@@ -67,27 +67,23 @@ public class MealsPlanFragment extends Fragment implements MealPlansView {
         mealPlansPresenter = new MealPlansPresenterImpl(mealPlansRepository, this);
         randomMealImg = view.findViewById(R.id.randomMealImage);
         randomMealName = view.findViewById(R.id.randomMealName);
-        addToFavImgView = view.findViewById(R.id.randomMealFavImgView);
-        addToPlanImgView = view.findViewById(R.id.randomMealPlanImgView);
+        addToFavBtn = view.findViewById(R.id.addToFavButtonMealPlans);
         ImageView refresher = view.findViewById(R.id.refresherImg);
         progressBar = view.findViewById(R.id.mealPlansProgressBar);
         mealPlansPresenter.getRandomMeal();
-            addToFavImgView.setOnClickListener(v -> {
-                if(isLoaded) {
-                    mealPlansPresenter.addMealToFav(meal);
-                }
-            });
-            addToPlanImgView.setOnClickListener(v -> {
+        addToFavBtn.setOnClickListener(v -> {
+            if (isLoaded) {
+                mealPlansPresenter.addMealToFav(meal);
+            }
+        });
 
-            });
-            refresher.setOnClickListener(v -> {
-                if (isLoaded){
-                    mealPlansPresenter.getRandomMeal();
-                    isLoaded = false;
-                }
+        refresher.setOnClickListener(v -> {
+            if (isLoaded) {
+                mealPlansPresenter.getRandomMeal();
+                isLoaded = false;
+            }
 
-            });
-
+        });
 
 
     }

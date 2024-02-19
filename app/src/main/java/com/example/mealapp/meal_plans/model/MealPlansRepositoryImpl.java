@@ -68,7 +68,7 @@ public class MealPlansRepositoryImpl implements IMealPlansRepository {
 
     @Override
     public void addMealToFav(Meal meal) {
-        mealsLocalDataBase.insertMeal(meal);
+        mealsLocalDataBase.insertFavMeal(meal);
     }
 
     @Override

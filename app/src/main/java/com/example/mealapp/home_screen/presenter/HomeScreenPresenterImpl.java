@@ -51,7 +51,7 @@ public class HomeScreenPresenterImpl implements IHomeScreenPresenter, IHomeNetwo
 
     @Override
     public void addMealToFavourites(Meal meal) {
-        homeScreenRepository.addMealToFavourite(this, meal);
+        homeScreenRepository.addMealToFavourite(meal);
     }
 
     @Override

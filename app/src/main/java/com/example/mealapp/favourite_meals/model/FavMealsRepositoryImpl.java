@@ -8,7 +8,7 @@ import java.util.List;
 import io.reactivex.rxjava3.core.Flowable;
 
 public class FavMealsRepositoryImpl implements IFavMealsRepository {
-    private IMealsLocalDataBase favMealsLocalDataSource;
+    private final IMealsLocalDataBase favMealsLocalDataSource;
     private static FavMealsRepositoryImpl instance = null;
 
     public static FavMealsRepositoryImpl getInstance(IMealsLocalDataBase localDataSource) {
@@ -23,14 +23,18 @@ public class FavMealsRepositoryImpl implements IFavMealsRepository {
     }
 
 
-
     @Override
     public void deleteMeal(Meal meal) {
-        favMealsLocalDataSource.deleteMeal(meal);
+        favMealsLocalDataSource.deleteFavMeal(meal);
     }
 
     @Override
     public Flowable<List<Meal>> getStoredMeals() {
-        return favMealsLocalDataSource.getAllMeals();
+        return favMealsLocalDataSource.getFavMeals();
+    }
+
+    @Override
+    public Flowable<Boolean> checkIfFavOrNot(Meal meal) {
+        return favMealsLocalDataSource.isFavMeal(meal.getId());
     }
 }

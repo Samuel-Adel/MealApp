@@ -1,21 +1,13 @@
 package com.example.mealapp.home_screen.model;
 
-import androidx.annotation.NonNull;
-import androidx.room.ColumnInfo;
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "meals")
 
 public class Meal {
     @SerializedName("idMeal")
-    @PrimaryKey
-    @NonNull
     private String id;
     @SerializedName("strMeal")
-    @ColumnInfo(name = "name")
     private String name;
     @SerializedName("strCategory")
 
@@ -33,10 +25,34 @@ public class Meal {
     @SerializedName("strYoutube")
 
     private String videoLink;
-    @ColumnInfo(name = "mealDay")
+    private byte[] image;
+    private boolean isFav;
     private String mealDay;
-    @ColumnInfo(name = "isFavorite")
-    private boolean isFavorite;
+
+    public boolean isFav() {
+        return isFav;
+    }
+
+    public void setFav(boolean fav) {
+        isFav = fav;
+    }
+
+    public String getMealDay() {
+        return mealDay;
+    }
+
+    public void setMealDay(String mealDay) {
+        this.mealDay = mealDay;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
     public Meal(String id, String name, String category, String country,
                 String instructions, String imageLink, String videoLink) {
         this.id = id;
@@ -48,21 +64,22 @@ public class Meal {
         this.videoLink = videoLink;
     }
 
-    public String getMealDay() {
-        return mealDay;
+    public Meal(String id, String name, String imageLink, byte[] image, boolean isFav) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
+        this.imageLink = imageLink;
+        this.isFav = isFav;
     }
 
-    public void setMealDay(String mealDay) {
+    public Meal(String id, String name, String imageLink, byte[] image, String mealDay) {
+        this.id = id;
+        this.name = name;
+        this.image = image;
         this.mealDay = mealDay;
+        this.imageLink = imageLink;
     }
 
-    public boolean isFavorite() {
-        return isFavorite;
-    }
-
-    public void setFavorite(boolean favorite) {
-        isFavorite = favorite;
-    }
     public String getId() {
         return id;
     }

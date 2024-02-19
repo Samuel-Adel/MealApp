@@ -1,6 +1,10 @@
 package com.example.mealapp.favourite_meals.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,24 +12,32 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.mealapp.R;
 import com.example.mealapp.home_screen.model.Meal;
 import com.example.mealapp.home_screen.view.HomeScreenMealsAdapter;
+import com.example.mealapp.network.NetworkConnectivity;
 
+import java.io.ByteArrayOutputStream;
+import java.util.Arrays;
 import java.util.List;
 
-public class FavMealsAdapter  extends RecyclerView.Adapter<FavMealsAdapter.ViewHolder> {
+public class FavMealsAdapter extends RecyclerView.Adapter<FavMealsAdapter.ViewHolder> {
 
     private final Context context;
 
     private List<Meal> meals;
     private final onFavScreenClickListener onFavScreenClickListener;
 
+    private byte[] convertedImage;
+    private ByteArrayOutputStream imageConverter;
 
     public FavMealsAdapter(Context context, List<Meal> meals, onFavScreenClickListener onFavScreenClickListener) {
         this.context = context;
@@ -58,7 +70,36 @@ public class FavMealsAdapter  extends RecyclerView.Adapter<FavMealsAdapter.ViewH
 
     @Override
     public void onBindViewHolder(@NonNull FavMealsAdapter.ViewHolder holder, int position) {
-        Glide.with(context).load(meals.get(position).getImageLink()).override(120,120).transform(new RoundedCorners(10)).centerCrop().into(holder.mealImage);
+        Log.i("Check image resource ", "onBindViewHolder: " + Arrays.toString(meals.get(position).getImage()));
+        boolean isConnected = NetworkConnectivity.isNetworkAvailable(context);
+        if (isConnected) {
+            Glide.with(context).asBitmap().load(meals.get(position).getImageLink()).override(120, 120).transform(new RoundedCorners(10)).centerCrop().into(new CustomTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                    imageConverter = new ByteArrayOutputStream();
+                    resource.compress(Bitmap.CompressFormat.PNG, 100, imageConverter);
+                    convertedImage = imageConverter.toByteArray();
+                    holder.mealImage.setImageBitmap(resource);
+                }
+
+                @Override
+                public void onLoadCleared(@Nullable Drawable placeholder) {
+                }
+            });
+            meals.get(position).setImage(convertedImage);
+        } else {
+            if (meals.get(position).getImage() != null) {
+                byte[] byteArray = meals.get(position).getImage();
+                Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                holder.mealImage.setImageBitmap(bitmap);
+            } else {
+                holder.mealImage.setImageResource(R.drawable.food_holder);
+            }
+        }
+
+//        Glide.with(context).asBitmap().load(meals.get(position).getImageLink()).
+//                override(120, 120).transform(new RoundedCorners(10)).centerCrop().into(holder.mealImage);
+//
         holder.mealName.setText(meals.get(position).getName());
         holder.favIcon.setImageResource(R.drawable.remove_from_fav);
         holder.favIcon.setOnClickListener(v -> {

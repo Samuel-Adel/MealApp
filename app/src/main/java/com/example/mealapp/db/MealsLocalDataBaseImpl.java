@@ -1,16 +1,19 @@
 package com.example.mealapp.db;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.mealapp.home_screen.model.Meal;
+import com.example.mealapp.meal_plans.model.Days;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Flowable;
 
 public class MealsLocalDataBaseImpl implements IMealsLocalDataBase {
-    private Flowable<List<Meal>> meals;
-    private MealsDAO mealsDAO;
+
+    private final MealsDAO mealsDAO;
     private static MealsLocalDataBaseImpl instance = null;
 
     public static MealsLocalDataBaseImpl getInstance(Context context) {
@@ -22,70 +25,66 @@ public class MealsLocalDataBaseImpl implements IMealsLocalDataBase {
 
     private MealsLocalDataBaseImpl(Context context) {
         mealsDAO = AppDataBase.getInstance(context.getApplicationContext()).geProductsDAO();
-        meals = mealsDAO.getAllProducts();
+    }
+
+
+    @Override
+    public void insertFavMeal(Meal meal) {
+        new Thread(() -> mealsDAO.insertFavMeal(new FavMealModel(meal.getId(), meal.getName(), meal.getImageLink(), meal.getImage()))).start();
     }
 
     @Override
-    public void insertMeal(Meal meal) {
-        new Thread(() -> {
-            mealsDAO.insertProduct(meal);
-        }).start();
+    public void insertMealPlan(Meal meal, Days day) {
+        new Thread(() -> mealsDAO.insertPlannedMeal(new PlannedMealModel(meal.getName(), meal.getImageLink(), meal.getImage(), meal.getId(), day.name()))).start();
     }
 
     @Override
-    public void deleteMeal(Meal meal) {
-        new Thread(() -> {
-            mealsDAO.deleteProduct(meal);
-        }).start();
+    public void deleteFavMeal(Meal meal) {
+        new Thread(() -> mealsDAO.deleteFavMealById(meal.getId())).start();
     }
 
     @Override
-    public Flowable<List<Meal>> getAllMeals() {
-        return meals;
+    public void deletePlannedMeal(Meal meal) {
+        new Thread(() -> mealsDAO.deletePlannedMealById(meal.getId(), meal.getMealDay())).start();
+
     }
+
 
     @Override
     public Flowable<List<Meal>> getFavMeals() {
-        return mealsDAO.getFavoriteMeals();
+        return mealsDAO.getAllFavMeals().map(favMeals -> {
+            Log.i("GettingFavMeals", "getFavMeals: " + favMeals.toArray().length);
+
+            List<Meal> meals = new ArrayList<>();
+            for (FavMealModel favMeal : favMeals) {
+                Meal meal = new Meal(favMeal.getId(), favMeal.getName(), favMeal.getImageLink(),favMeal.getImage(), true // Assuming all fav meals are marked as favorite
+                );
+                meals.add(meal);
+            }
+            Log.i("GettingFavMeals", "getFavMeals: ");
+            return meals;
+        });
     }
 
     @Override
     public Flowable<Boolean> isFavMeal(String mealId) {
-        return mealsDAO.isMealFavorite(mealId);
+        return mealsDAO.getFavMealCountById(mealId).map(count -> count > 0);
     }
 
     @Override
-    public Flowable<List<Meal>> getSaturdayMeals() {
-        return mealsDAO.getSaturdayMeals();
+    public Flowable<Boolean> isPlannedMeal(String mealDay) {
+        return mealsDAO.hasPlannedMeal(mealDay).map(count -> count > 0);
     }
 
     @Override
-    public Flowable<List<Meal>> getSundayMeals() {
-        return mealsDAO.getSundayMeals();
-    }
-
-    @Override
-    public Flowable<List<Meal>> getMondayMeals() {
-        return mealsDAO.getMondayMeals();
-    }
-
-    @Override
-    public Flowable<List<Meal>> getTuesdayMeals() {
-        return mealsDAO.getTuesdayMeals();
-    }
-
-    @Override
-    public Flowable<List<Meal>> getWednesdayMeals() {
-        return mealsDAO.getWednesdayMeals();
-    }
-
-    @Override
-    public Flowable<List<Meal>> getThursdayMeals() {
-        return mealsDAO.getThursdayMeals();
-    }
-
-    @Override
-    public Flowable<List<Meal>> getFridayMeals() {
-        return mealsDAO.getFridayMeals();
+    public Flowable<List<Meal>> getPlannedMealsByDay(String dayName) {
+        return mealsDAO.getPlannedMealsByDay(dayName).map(plannedMeals -> {
+            List<Meal> meals = new ArrayList<>();
+            for (PlannedMealModel plannedMeal : plannedMeals) {
+                Meal meal = new Meal(plannedMeal.getId(), plannedMeal.getName(),plannedMeal.getImageLink(), plannedMeal.getImage(), plannedMeal.getMealDay());
+                meals.add(meal);
+            }
+            return meals;
+        });
     }
 }

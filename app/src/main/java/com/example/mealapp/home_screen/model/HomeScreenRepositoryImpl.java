@@ -11,7 +11,7 @@ public class HomeScreenRepositoryImpl implements IHomeScreenRepository {
 
     public static HomeScreenRepositoryImpl getInstance(IHomeRemoteDataSource remoteDataSource, IMealsLocalDataBase favMealsLocalDataSource) {
         if (instance == null) {
-            instance = new HomeScreenRepositoryImpl(remoteDataSource,favMealsLocalDataSource);
+            instance = new HomeScreenRepositoryImpl(remoteDataSource, favMealsLocalDataSource);
         }
         return instance;
     }
@@ -52,7 +52,7 @@ public class HomeScreenRepositoryImpl implements IHomeScreenRepository {
     }
 
     @Override
-    public void addMealToFavourite(IHomeNetworkCallBacks networkCallBacks, Meal meal) {
-        favMealsLocalDataSource.insertMeal(meal);
+    public void addMealToFavourite( Meal meal) {
+        favMealsLocalDataSource.insertFavMeal(meal);
     }
 }
