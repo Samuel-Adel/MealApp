@@ -12,6 +12,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import com.example.mealapp.R;
 import com.example.mealapp.login.model.ILoginRepository;
 import com.example.mealapp.login.model.LoginRepository;
 import com.example.mealapp.login.model.UserCredentials;
+import com.example.mealapp.login.model.UserSavedCredentialsManager;
 import com.example.mealapp.login.network.ILoginRemoteDataSource;
 import com.example.mealapp.login.network.LoginRemoteDataSourceImpl;
 import com.example.mealapp.login.presenter.ILoginPresenter;
@@ -37,6 +39,7 @@ public class LoginScreenFragment extends Fragment implements LoginView {
     private EditText password;
     private ProgressBar progressBar;
     private final String TAG = "Login";
+    private UserSavedCredentialsManager userSavedCredentialsManager;
 
     public LoginScreenFragment() {
     }
@@ -59,28 +62,32 @@ public class LoginScreenFragment extends Fragment implements LoginView {
         super.onViewCreated(view, savedInstanceState);
         Button btnSignIn = view.findViewById(R.id.btnSignIn);
         TextView signUpTextView = view.findViewById(R.id.signUpTextView);
-        ILoginRemoteDataSource loginRemoteDataSource = LoginRemoteDataSourceImpl.getInstance();
+        ILoginRemoteDataSource loginRemoteDataSource = LoginRemoteDataSourceImpl.getInstance(getContext().getApplicationContext(), getActivity());
         ILoginRepository loginRepository = LoginRepository.getInstance(loginRemoteDataSource);
         loginPresenter = new LoginPresenterImpl(this, loginRepository);
         navController = NavHostFragment.findNavController(this);
         progressBar = view.findViewById(R.id.progressBarLogin);
         email = view.findViewById(R.id.editTextEmailAddressLogin);
         password = view.findViewById(R.id.editTextPasswordLogin);
-
+        ImageView googleIcon = view.findViewById(R.id.googleIconBtn);
+        userSavedCredentialsManager = UserSavedCredentialsManager.getInstance(this.getContext());
         signUpTextView.setOnClickListener(v ->
                 navController.navigate(R.id.signupScreenFragment)
 
         );
+
         btnSignIn.setOnClickListener(v -> {
-            loggedInSuccessfully("Developing Option");
-//            if (validateInputs(email.getText().toString(), password.getText().toString())) {
-//                loginPresenter.loginWithUserCredentials(new UserCredentials(email.getText().toString(), password.getText().toString()));
-//                Log.i(TAG, "User Email"+email.getText().toString());
-//                Log.i(TAG, "User Password"+password.getText().toString());
-//            }
+            //   loggedInSuccessfully("Developing Option");
+            if (validateInputs(email.getText().toString(), password.getText().toString())) {
+                loginPresenter.loginWithUserCredentials(new UserCredentials(email.getText().toString(), password.getText().toString()));
+                Log.i(TAG, "User Email" + email.getText().toString());
+                Log.i(TAG, "User Password" + password.getText().toString());
+            }
 
         });
+        googleIcon.setOnClickListener(v -> {
 
+        });
 
     }
 
@@ -98,25 +105,26 @@ public class LoginScreenFragment extends Fragment implements LoginView {
     @Override
     public void showErrorMessage(String errorMessage) {
         Toast.makeText(getContext(), errorMessage, Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
-    public void loggedInSuccessfully(String loggedInSuccessfullyMessage) {
-        Toast.makeText(getContext(), loggedInSuccessfullyMessage, Toast.LENGTH_SHORT).show();
+    public void loggedInSuccessfully(String userToken) {
+        userSavedCredentialsManager.saveUserToken(userToken);
         Intent intent = new Intent(getActivity(), HomeActivity.class);
         startActivity(intent);
+        /// TODO
 //// Finish the current activity to prevent returning to it when pressing back
 //        getActivity().finish();
     }
 
     @Override
     public void statusBarVisibilityStatus(boolean isVisible) {
-        Log.i(TAG, "statusBarVisibilityStatus: "+isVisible);
+        Log.i(TAG, "statusBarVisibilityStatus: " + isVisible);
         if (isVisible) {
             progressBar.setVisibility(View.VISIBLE);
         } else {
             progressBar.setVisibility(View.GONE);
         }
     }
+
 }

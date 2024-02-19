@@ -156,7 +156,7 @@
 
         <TextView
             android:id="@+id/dontHaveAnAccountTextView"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="106dp"
             android:layout_marginTop="20dp"
@@ -166,7 +166,7 @@
             android:text="@string/dontHaveAnAccount"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/googleIcon" />
+            app:layout_constraintTop_toBottomOf="@+id/googleIconBtn" />
 
         <TextView
             android:id="@+id/signUpTextView"
@@ -174,13 +174,15 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="112dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/line_under_text_boulder"
             android:text="@string/signup"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/dontHaveAnAccountTextView"
-            app:layout_constraintTop_toBottomOf="@+id/googleIcon" />
+            app:layout_constraintTop_toBottomOf="@+id/googleIconBtn" />
 
         <View
             android:id="@+id/divider3"
@@ -219,16 +221,16 @@
             app:layout_constraintTop_toBottomOf="@+id/btnSignIn" />
 
         <ImageView
-            android:id="@+id/googleIcon"
-            android:layout_width="36dp"
+            android:id="@+id/googleIconBtn"
+            android:layout_width="37dp"
             android:layout_height="37dp"
             android:layout_marginTop="16dp"
             android:clickable="true"
             android:focusable="true"
             android:src="@drawable/google_icon"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/loginGuestUserImgVie"
             app:layout_constraintTop_toBottomOf="@+id/youCanConnectWithTextView" />
 
         <ProgressBar
@@ -236,12 +238,23 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_marginTop="468dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/loginToolBar" />
+
+        <ImageView
+            android:id="@+id/loginGuestUserImgVie"
+            android:layout_width="37dp"
+            android:layout_height="37dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/guest_user"
+            app:layout_constraintEnd_toStartOf="@+id/googleIconBtn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/youCanConnectWithTextView" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

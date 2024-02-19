@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -62,7 +63,7 @@ public class FavMealsAdapter extends RecyclerView.Adapter<FavMealsAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.meal_item, parent, false);
+        View view = layoutInflater.inflate(R.layout.plan_meal_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -75,8 +76,8 @@ public class FavMealsAdapter extends RecyclerView.Adapter<FavMealsAdapter.ViewHo
                 .centerCrop().into(holder.mealImage);
 
         holder.mealName.setText(meals.get(position).getName());
-        holder.favIcon.setImageResource(R.drawable.remove_from_fav);
-        holder.favIcon.setOnClickListener(v -> {
+        holder.removeFromFav.setText(R.string.removeFromFav);
+        holder.removeFromFav.setOnClickListener(v -> {
             onFavScreenClickListener.removeFromFavItems(meals.get(position));
         });
         holder.cardView.setOnClickListener(v -> {
@@ -93,16 +94,16 @@ public class FavMealsAdapter extends RecyclerView.Adapter<FavMealsAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private final ImageView mealImage;
-        private final ImageView favIcon;
+        private final Button removeFromFav;
         private final TextView mealName;
         private final CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.mealImage = itemView.findViewById(R.id.mealImage);
-            this.favIcon = itemView.findViewById(R.id.favIcon);
-            this.mealName = itemView.findViewById(R.id.mealName);
-            this.cardView = itemView.findViewById(R.id.cardViewMeal);
+            this.mealImage = itemView.findViewById(R.id.mealImagePlan);
+            this.removeFromFav = itemView.findViewById(R.id.removeFromPlanButton);
+            this.mealName = itemView.findViewById(R.id.mealNamePlan);
+            this.cardView = itemView.findViewById(R.id.cardViewMealPlan);
         }
     }
 }

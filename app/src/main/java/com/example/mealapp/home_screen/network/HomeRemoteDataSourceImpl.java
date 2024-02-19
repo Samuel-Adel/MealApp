@@ -13,6 +13,8 @@ import com.example.mealapp.home_screen.model.MealsList;
 import com.example.mealapp.network.ApiKeys;
 import com.google.gson.GsonBuilder;
 
+import java.util.ArrayList;
+
 import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
@@ -64,7 +66,7 @@ public class HomeRemoteDataSourceImpl implements IHomeRemoteDataSource {
                 item -> {
                     networkCallBacks.callInProgressStatus(false);
 //                    Log.i(TAG, "onResponse: " + item.getMeals().get(0).getName());
-                    networkCallBacks.onMealsSuccessfulCallBack(item.getMeals());
+                    networkCallBacks.onMealsSuccessfulCallBack(item.getMeals()==null?new ArrayList<>():item.getMeals());
                 },
                 error -> {
                     networkCallBacks.callInProgressStatus(false);
@@ -83,7 +85,7 @@ public class HomeRemoteDataSourceImpl implements IHomeRemoteDataSource {
                 item -> {
                     networkCallBacks.callInProgressStatus(false);
 //                    Log.i(TAG, "onResponse: " + item.getMeals().get(0).getName());
-                    networkCallBacks.onMealsSuccessfulCallBack(item.getMeals());
+                    networkCallBacks.onMealsSuccessfulCallBack(item.getMeals()==null?new ArrayList<>():item.getMeals());
                 },
                 error -> {
                     networkCallBacks.callInProgressStatus(false);
@@ -103,7 +105,7 @@ public class HomeRemoteDataSourceImpl implements IHomeRemoteDataSource {
                 item -> {
                     networkCallBacks.callInProgressStatus(false);
 //                    Log.i(TAG, "onResponse: " + item.getMeals().get(0).getName());
-                    networkCallBacks.onMealsSuccessfulCallBack(item.getMeals());
+                    networkCallBacks.onMealsSuccessfulCallBack(item.getMeals()==null?new ArrayList<>():item.getMeals());
                 },
                 error -> {
                     networkCallBacks.callInProgressStatus(false);

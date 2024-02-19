@@ -16,9 +16,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.mealapp.R;
+import com.example.mealapp.login.model.UserSavedCredentialsManager;
 
 public class GetStartedFragment extends Fragment {
-
 
     public GetStartedFragment() {
     }
@@ -39,6 +39,7 @@ public class GetStartedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         NavController navController = NavHostFragment.findNavController(this);
         Button btnGetStarted = view.findViewById(R.id.btnGetStarted);
         TextView btnLogin = view.findViewById(R.id.loginTextViewGetStarted);

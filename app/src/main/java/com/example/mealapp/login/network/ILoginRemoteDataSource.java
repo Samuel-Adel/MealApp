@@ -5,4 +5,5 @@ import com.example.mealapp.network.NetworkCallBacks;
 
 public interface ILoginRemoteDataSource {
     void makeNetworkCall(NetworkCallBacks networkCallBacks, UserCredentials userCredentials);
+    void signUpWithGoogle(NetworkCallBacks networkCallBacks);
 }

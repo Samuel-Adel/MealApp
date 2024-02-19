@@ -13,4 +13,5 @@ public interface IHomeScreenPresenter {
     public void getCountries();
     public void getIngredients();
     public void addMealToFavourites(Meal meal);
+    public void logOut();
 }

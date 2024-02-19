@@ -1,5 +1,6 @@
 package com.example.mealapp.splash_screen.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,22 +8,20 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import com.example.mealapp.HomeActivity;
 import com.example.mealapp.R;
+import com.example.mealapp.login.model.UserSavedCredentialsManager;
 
 
 public class SplashScreenFragment extends Fragment {
 
+    private UserSavedCredentialsManager userSavedCredentialsManager;
 
     public SplashScreenFragment() {
         // Required empty public constructor
@@ -45,18 +44,23 @@ public class SplashScreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         NavController navController = NavHostFragment.findNavController(this);
-
+        userSavedCredentialsManager = UserSavedCredentialsManager.getInstance(this.getContext());
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                navController.navigate(R.id.getStartedFragment);
+                if (userSavedCredentialsManager.getUserToken() != null) {
+                    Intent intent = new Intent(getActivity(), HomeActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+                } else {
+                    navController.navigate(R.id.getStartedFragment);
+                }
+
 
             }
         }, 7000);
 
     }
-
-
 
 
 }

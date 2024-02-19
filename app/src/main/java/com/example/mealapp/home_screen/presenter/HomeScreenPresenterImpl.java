@@ -55,6 +55,11 @@ public class HomeScreenPresenterImpl implements IHomeScreenPresenter, IHomeNetwo
     }
 
     @Override
+    public void logOut() {
+        homeScreenRepository.logOut();
+    }
+
+    @Override
     public void onCategoriesSuccessfulCallBack(List<Category> categories) {
         homeView.showFilterWithCategories(categories);
     }

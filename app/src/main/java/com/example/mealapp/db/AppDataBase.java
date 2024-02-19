@@ -5,15 +5,12 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
-import androidx.room.TypeConverters;
-
-import com.example.mealapp.home_screen.model.Meal;
 
 @Database(entities = {FavMealModel.class,PlannedMealModel.class}, version = 1)
 public abstract class AppDataBase extends RoomDatabase {
     private static AppDataBase instance = null;
 
-    public abstract MealsDAO geProductsDAO();
+    public abstract MealsDAO getMealsDAO();
 
     public static synchronized AppDataBase getInstance(Context context) {
         if (instance == null) {
@@ -21,5 +18,8 @@ public abstract class AppDataBase extends RoomDatabase {
                     .build();
         }
         return instance;
+    }
+    public static void clearDatabase() {
+        instance.clearAllTables();
     }
 }

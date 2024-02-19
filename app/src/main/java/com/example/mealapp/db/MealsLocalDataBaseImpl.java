@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.mealapp.home_screen.model.Meal;
+import com.example.mealapp.login.model.UserSavedCredentialsManager;
 import com.example.mealapp.meal_plans.model.Days;
 
 import java.util.ArrayList;
@@ -15,6 +16,8 @@ public class MealsLocalDataBaseImpl implements IMealsLocalDataBase {
 
     private final MealsDAO mealsDAO;
     private static MealsLocalDataBaseImpl instance = null;
+    private AppDataBase appDataBase;
+    private UserSavedCredentialsManager userSavedCredentialsManager;
 
     public static MealsLocalDataBaseImpl getInstance(Context context) {
         if (instance == null) {
@@ -24,7 +27,9 @@ public class MealsLocalDataBaseImpl implements IMealsLocalDataBase {
     }
 
     private MealsLocalDataBaseImpl(Context context) {
-        mealsDAO = AppDataBase.getInstance(context.getApplicationContext()).geProductsDAO();
+        appDataBase = AppDataBase.getInstance(context.getApplicationContext());
+        mealsDAO = appDataBase.getMealsDAO();
+        userSavedCredentialsManager = UserSavedCredentialsManager.getInstance(context);
     }
 
 
@@ -34,8 +39,15 @@ public class MealsLocalDataBaseImpl implements IMealsLocalDataBase {
     }
 
     @Override
+    public void logOut() {
+        new Thread(() -> appDataBase.clearAllTables()).start();
+        userSavedCredentialsManager.clearUserToken();
+
+    }
+
+    @Override
     public void insertMealPlan(Meal meal, Days day) {
-        new Thread(() -> mealsDAO.insertPlannedMeal(new PlannedMealModel(meal.getName(), meal.getImageLink(),  meal.getId(), day.name()))).start();
+        new Thread(() -> mealsDAO.insertPlannedMeal(new PlannedMealModel(meal.getName(), meal.getImageLink(), meal.getId(), day.name()))).start();
     }
 
     @Override
@@ -81,7 +93,7 @@ public class MealsLocalDataBaseImpl implements IMealsLocalDataBase {
         return mealsDAO.getPlannedMealsByDay(dayName).map(plannedMeals -> {
             List<Meal> meals = new ArrayList<>();
             for (PlannedMealModel plannedMeal : plannedMeals) {
-                Meal meal = new Meal(plannedMeal.getId(), plannedMeal.getName(),plannedMeal.getImageLink(), plannedMeal.getMealDay());
+                Meal meal = new Meal(plannedMeal.getId(), plannedMeal.getName(), plannedMeal.getImageLink(), plannedMeal.getMealDay());
                 meals.add(meal);
             }
             return meals;

@@ -55,4 +55,9 @@ public class HomeScreenRepositoryImpl implements IHomeScreenRepository {
     public void addMealToFavourite( Meal meal) {
         favMealsLocalDataSource.insertFavMeal(meal);
     }
+
+    @Override
+    public void logOut() {
+        favMealsLocalDataSource.logOut();
+    }
 }

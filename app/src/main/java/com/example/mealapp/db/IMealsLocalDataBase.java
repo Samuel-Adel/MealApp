@@ -11,6 +11,7 @@ import io.reactivex.rxjava3.core.Flowable;
 
 public interface IMealsLocalDataBase {
     void insertFavMeal(Meal meal);
+    void logOut();
 
     void insertMealPlan(Meal meal, Days day);
 
