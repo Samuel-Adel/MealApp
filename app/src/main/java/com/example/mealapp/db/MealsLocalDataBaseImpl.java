@@ -30,12 +30,12 @@ public class MealsLocalDataBaseImpl implements IMealsLocalDataBase {
 
     @Override
     public void insertFavMeal(Meal meal) {
-        new Thread(() -> mealsDAO.insertFavMeal(new FavMealModel(meal.getId(), meal.getName(), meal.getImageLink(), meal.getImage()))).start();
+        new Thread(() -> mealsDAO.insertFavMeal(new FavMealModel(meal.getId(), meal.getName(), meal.getImageLink()))).start();
     }
 
     @Override
     public void insertMealPlan(Meal meal, Days day) {
-        new Thread(() -> mealsDAO.insertPlannedMeal(new PlannedMealModel(meal.getName(), meal.getImageLink(), meal.getImage(), meal.getId(), day.name()))).start();
+        new Thread(() -> mealsDAO.insertPlannedMeal(new PlannedMealModel(meal.getName(), meal.getImageLink(),  meal.getId(), day.name()))).start();
     }
 
     @Override
@@ -57,7 +57,7 @@ public class MealsLocalDataBaseImpl implements IMealsLocalDataBase {
 
             List<Meal> meals = new ArrayList<>();
             for (FavMealModel favMeal : favMeals) {
-                Meal meal = new Meal(favMeal.getId(), favMeal.getName(), favMeal.getImageLink(),favMeal.getImage(), true // Assuming all fav meals are marked as favorite
+                Meal meal = new Meal(favMeal.getId(), favMeal.getName(), favMeal.getImageLink(), true // Assuming all fav meals are marked as favorite
                 );
                 meals.add(meal);
             }
@@ -81,7 +81,7 @@ public class MealsLocalDataBaseImpl implements IMealsLocalDataBase {
         return mealsDAO.getPlannedMealsByDay(dayName).map(plannedMeals -> {
             List<Meal> meals = new ArrayList<>();
             for (PlannedMealModel plannedMeal : plannedMeals) {
-                Meal meal = new Meal(plannedMeal.getId(), plannedMeal.getName(),plannedMeal.getImageLink(), plannedMeal.getImage(), plannedMeal.getMealDay());
+                Meal meal = new Meal(plannedMeal.getId(), plannedMeal.getName(),plannedMeal.getImageLink(), plannedMeal.getMealDay());
                 meals.add(meal);
             }
             return meals;

@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +26,7 @@ import com.example.mealapp.meal_details.network.IMealDetailsRemoteDataSource;
 import com.example.mealapp.meal_details.network.MealDetailsRemoteDataSourceImpl;
 import com.example.mealapp.meal_details.presenter.IMealDetailsPresenter;
 import com.example.mealapp.meal_details.presenter.MealDetailsPresenterImpl;
+import com.example.mealapp.meal_plans.model.Days;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -72,13 +75,16 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
         video = findViewById(R.id.detailVideo);
         instructions = findViewById(R.id.detailInstructionsTextView);
         country = findViewById(R.id.detailCountryTextView);
+        isPlannedImageView = findViewById(R.id.addToPlansDetailsImgView);
         addToFavImgBtn.setOnClickListener(v -> {
             if (isLoaded) {
                 addOrRemove();
                 //   mealDetailsPresenter.checkToAddOrRemoveMealFromFav(meal);
             }
         });
-
+        isPlannedImageView.setOnClickListener(v -> {
+            showWeekdayMenu(v);
+        });
 
     }
 
@@ -164,6 +170,44 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
                 }
 
         );
+    }
+
+    private void showWeekdayMenu(View v) {
+        PopupMenu popup = new PopupMenu(this, v);
+        popup.getMenuInflater().inflate(R.menu.days_pop_menu, popup.getMenu());
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == R.id.monday) {
+                    mealDetailsPresenter.addMealToPlan(meal, Days.monday);
+                    return true;
+                } else if (itemId == R.id.tuesday) {
+                    mealDetailsPresenter.addMealToPlan(meal, Days.tuesday);
+                    return true;
+                } else if (itemId == R.id.wednesday) {
+                    mealDetailsPresenter.addMealToPlan(meal, Days.wednesday);
+                    return true;
+                } else if (itemId == R.id.thursday) {
+                    mealDetailsPresenter.addMealToPlan(meal, Days.thursday);
+                    return true;
+                } else if (itemId == R.id.friday) {
+                    mealDetailsPresenter.addMealToPlan(meal, Days.friday);
+                    return true;
+                } else if (itemId == R.id.saturday) {
+                    mealDetailsPresenter.addMealToPlan(meal, Days.saturday);
+                    return true;
+                } else if (itemId == R.id.sunday) {
+                    mealDetailsPresenter.addMealToPlan(meal, Days.sunday);
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+
+        popup.show();
     }
 
 

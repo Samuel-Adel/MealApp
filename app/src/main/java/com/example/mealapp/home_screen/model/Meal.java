@@ -25,7 +25,6 @@ public class Meal {
     @SerializedName("strYoutube")
 
     private String videoLink;
-    private byte[] image;
     private boolean isFav;
     private String mealDay;
 
@@ -45,13 +44,8 @@ public class Meal {
         this.mealDay = mealDay;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
 
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
+
 
     public Meal(String id, String name, String category, String country,
                 String instructions, String imageLink, String videoLink) {
@@ -64,18 +58,16 @@ public class Meal {
         this.videoLink = videoLink;
     }
 
-    public Meal(String id, String name, String imageLink, byte[] image, boolean isFav) {
+    public Meal(String id, String name, String imageLink,boolean isFav) {
         this.id = id;
         this.name = name;
-        this.image = image;
         this.imageLink = imageLink;
         this.isFav = isFav;
     }
 
-    public Meal(String id, String name, String imageLink, byte[] image, String mealDay) {
+    public Meal(String id, String name, String imageLink,  String mealDay) {
         this.id = id;
         this.name = name;
-        this.image = image;
         this.mealDay = mealDay;
         this.imageLink = imageLink;
     }

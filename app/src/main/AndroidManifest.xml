@@ -19,16 +19,20 @@
         <activity
             android:name=".meal_details.view.MealDetailsActivity"
             android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".HomeActivity"
+            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".splash_screen.view.SplashScreenFragment"
+            android:screenOrientation="portrait"
             android:exported="false" />
 
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

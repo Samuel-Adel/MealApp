@@ -26,5 +26,5 @@ public interface IMealPlansRepository {
 
     public void addMealToFav(Meal meal);
 
-    public void addMealToPlan(Meal meal, Days day);
+    public void removeMealFromPlan(Meal meal);
 }

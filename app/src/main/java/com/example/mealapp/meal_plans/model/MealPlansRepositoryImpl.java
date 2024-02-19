@@ -33,37 +33,37 @@ public class MealPlansRepositoryImpl implements IMealPlansRepository {
 
     @Override
     public Flowable<List<Meal>> getSaturdayPlanMeals() {
-        return null;
+        return mealsLocalDataBase.getPlannedMealsByDay(Days.saturday.name());
     }
 
     @Override
     public Flowable<List<Meal>> getSundayPlanMeals() {
-        return null;
+        return mealsLocalDataBase.getPlannedMealsByDay(Days.sunday.name());
     }
 
     @Override
     public Flowable<List<Meal>> getMondayPlanMeals() {
-        return null;
+        return mealsLocalDataBase.getPlannedMealsByDay(Days.monday.name());
     }
 
     @Override
     public Flowable<List<Meal>> getTuesdayPlanMeals() {
-        return null;
+        return mealsLocalDataBase.getPlannedMealsByDay(Days.tuesday.name());
     }
 
     @Override
     public Flowable<List<Meal>> getWednesdayPlanMeals() {
-        return null;
+        return mealsLocalDataBase.getPlannedMealsByDay(Days.wednesday.name());
     }
 
     @Override
     public Flowable<List<Meal>> getThursdayPlanMeals() {
-        return null;
+        return mealsLocalDataBase.getPlannedMealsByDay(Days.thursday.name());
     }
 
     @Override
     public Flowable<List<Meal>> getFridayPlanMeals() {
-        return null;
+        return mealsLocalDataBase.getPlannedMealsByDay(Days.friday.name());
     }
 
     @Override
@@ -72,7 +72,7 @@ public class MealPlansRepositoryImpl implements IMealPlansRepository {
     }
 
     @Override
-    public void addMealToPlan(Meal meal, Days day) {
-
+    public void removeMealFromPlan(Meal meal) {
+        mealsLocalDataBase.deletePlannedMeal(meal);
     }
 }

@@ -14,14 +14,12 @@ public class FavMealModel {
     private String name;
     @ColumnInfo(name = "image_link")
     private String imageLink;
-    @ColumnInfo(name = "image")
-    private byte[] image;
 
-    public FavMealModel(@NonNull String id, String name, String imageLink, byte[] image) {
+
+    public FavMealModel(@NonNull String id, String name, String imageLink) {
         this.id = id;
         this.name = name;
         this.imageLink = imageLink;
-        this.image = image;
     }
 
     public String getImageLink() {
@@ -49,11 +47,5 @@ public class FavMealModel {
         this.name = name;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
 
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
 }

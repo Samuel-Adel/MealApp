@@ -1,5 +1,6 @@
 package com.example.mealapp.home_screen.network;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.example.mealapp.home_screen.model.Category;
@@ -16,29 +17,40 @@ import hu.akarnokd.rxjava3.retrofit.RxJava3CallAdapterFactory;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import okhttp3.Cache;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeRemoteDataSourceImpl implements IHomeRemoteDataSource {
+    private Context context;
     private static final String TAG = "HomeScreenRemoteDataSource";
     private static final String BASE_URL = "https://www.themealdb.com/api/json/v1/1/";
     public static HomeRemoteDataSourceImpl instance = null;
     private ApiKeys apiKeys;
 
-    public static HomeRemoteDataSourceImpl getInstance() {
+    public static HomeRemoteDataSourceImpl getInstance(Context context) {
         if (instance == null) {
-            instance = new HomeRemoteDataSourceImpl();
+            instance = new HomeRemoteDataSourceImpl(context);
         }
         return instance;
 
     }
 
-    private HomeRemoteDataSourceImpl() {
+    private HomeRemoteDataSourceImpl(Context context) {
+        this.context=context;
+        int size = 10*1024*1024;
+        Cache cache = new Cache(this.context.getCacheDir(),size);
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .cache(cache)
+                .build();
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setLenient().create()))
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
                 .build();
+
         apiKeys = retrofit.create(ApiKeys.class);
 
     }

@@ -76,7 +76,7 @@ public class MealPlansPresenterImpl implements IMealPlansPresenter, IMealPlansNe
     }
 
     @Override
-    public void addMealToPlan(Meal meal, Days day) {
-        mealPlansRepository.addMealToPlan(meal, day);
+    public void removeMealFromPlan(Meal meal) {
+        mealPlansRepository.removeMealFromPlan(meal);
     }
 }

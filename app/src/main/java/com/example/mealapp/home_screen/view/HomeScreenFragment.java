@@ -76,7 +76,7 @@ public class HomeScreenFragment extends Fragment implements OnFilterItemClickLis
         homeScreenCountryAdapter = new HomeScreenFilterAdapter<>(getActivity().getApplicationContext(), new ArrayList<>(), this);
         homeScreenIngredientAdapter = new HomeScreenFilterAdapter<>(getActivity().getApplicationContext(), new ArrayList<>(), this);
         IMealsLocalDataBase favMealsLocalDataSource = MealsLocalDataBaseImpl.getInstance(getActivity().getApplicationContext());
-        IHomeRemoteDataSource homeRemoteDataSource = HomeRemoteDataSourceImpl.getInstance();
+        IHomeRemoteDataSource homeRemoteDataSource = HomeRemoteDataSourceImpl.getInstance(getActivity().getApplicationContext());
         IHomeScreenRepository homeScreenRepository = HomeScreenRepositoryImpl.getInstance(homeRemoteDataSource, favMealsLocalDataSource);
         homeScreenPresenter = new HomeScreenPresenterImpl(homeScreenRepository, this);
 

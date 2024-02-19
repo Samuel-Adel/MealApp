@@ -21,8 +21,6 @@ public class PlannedMealModel {
         this.imageLink = imageLink;
     }
 
-    @ColumnInfo(name = "image")
-    private byte[] image;
     @NonNull
     @ColumnInfo(name = "id")
 
@@ -33,9 +31,9 @@ public class PlannedMealModel {
 
     public String mealDay;
 
-    public PlannedMealModel(String name,String imageLink, byte[] image, @NonNull String id, @NonNull String mealDay) {
+    public PlannedMealModel(String name,String imageLink,  @NonNull String id, @NonNull String mealDay) {
         this.name = name;
-        this.image = image;
+
         this.id = id;
         this.imageLink = imageLink;
         this.mealDay = mealDay;
@@ -49,13 +47,9 @@ public class PlannedMealModel {
         this.name = name;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
 
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
+
+
 
     @NonNull
     public String getId() {
