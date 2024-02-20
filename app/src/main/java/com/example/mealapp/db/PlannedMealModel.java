@@ -31,7 +31,10 @@ public class PlannedMealModel {
 
     public String mealDay;
 
-    public PlannedMealModel(String name,String imageLink,  @NonNull String id, @NonNull String mealDay) {
+    public PlannedMealModel() {
+    }
+
+    public PlannedMealModel(String name, String imageLink, @NonNull String id, @NonNull String mealDay) {
         this.name = name;
 
         this.id = id;
@@ -46,9 +49,6 @@ public class PlannedMealModel {
     public void setName(String name) {
         this.name = name;
     }
-
-
-
 
 
     @NonNull

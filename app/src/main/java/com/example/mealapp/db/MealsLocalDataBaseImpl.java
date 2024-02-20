@@ -6,14 +6,13 @@ import android.util.Log;
 import com.example.mealapp.home_screen.model.Meal;
 import com.example.mealapp.user.UserSavedCredentialsManager;
 import com.example.mealapp.meal_plans.model.Days;
-import com.example.mealapp.user.logout.Logout;
+import com.example.mealapp.user.backup.FireBaseUser;
+import com.example.mealapp.user.backup.FirebaseBackUp;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MealsLocalDataBaseImpl implements IMealsLocalDataBase {
 
@@ -43,19 +42,10 @@ public class MealsLocalDataBaseImpl implements IMealsLocalDataBase {
 
     @Override
     public void logOut() {
-        String userToken = userSavedCredentialsManager.getUserToken();
-        mealsDAO.getAllFavMeals()
-                .firstOrError()
-                .flatMap(favMeals -> mealsDAO.getAllPlannedMeals()
-                        .flatMap(Flowable::fromIterable)
-                        .toList()
-                        .map(plannedMeals -> {
-                            Logout.saveUserDataToFirebase(userToken, favMeals, plannedMeals);
-                            return null;
-                        }))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe();
+        List<FavMealModel> favMeals = mealsDAO.getAllFavMeals().blockingFirst();
+        List<PlannedMealModel> plannedMeals = mealsDAO.getAllPlannedMeals().blockingFirst();
+        FireBaseUser user = new FireBaseUser(userSavedCredentialsManager.getUserToken(), favMeals, plannedMeals);
+        FirebaseBackUp.saveUserDataToFirebase(user);
         new Thread(() -> appDataBase.clearAllTables()).start();
         userSavedCredentialsManager.clearUserToken();
     }
@@ -63,6 +53,12 @@ public class MealsLocalDataBaseImpl implements IMealsLocalDataBase {
     @Override
     public void insertMealPlan(Meal meal, Days day) {
         new Thread(() -> mealsDAO.insertPlannedMeal(new PlannedMealModel(meal.getName(), meal.getImageLink(), meal.getId(), day.name()))).start();
+    }
+
+    @Override
+    public void insertMealPlan(Meal meal, String day) {
+        new Thread(() -> mealsDAO.insertPlannedMeal(new PlannedMealModel(meal.getName(), meal.getImageLink(), meal.getId(), day))).start();
+
     }
 
     @Override

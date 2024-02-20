@@ -22,6 +22,8 @@ import android.view.ViewGroup;
 
 import com.example.mealapp.HomeActivity;
 import com.example.mealapp.R;
+import com.example.mealapp.db.IMealsLocalDataBase;
+import com.example.mealapp.db.MealsLocalDataBaseImpl;
 import com.example.mealapp.login.model.ILoginRepository;
 import com.example.mealapp.login.model.LoginRepository;
 import com.example.mealapp.login.model.UserCredentials;
@@ -84,7 +86,8 @@ public class LoginScreenFragment extends Fragment implements LoginView {
         TextView signUpTextView = view.findViewById(R.id.signUpTextView);
         ILoginRemoteDataSource loginRemoteDataSource = LoginRemoteDataSourceImpl.getInstance(getContext().getApplicationContext(), getActivity());
         UserSavedCredentialsManager userSavedCredentialsManager = UserSavedCredentialsManager.getInstance(this.getContext());
-        ILoginRepository loginRepository = LoginRepository.getInstance(loginRemoteDataSource, userSavedCredentialsManager);
+        IMealsLocalDataBase mealsLocalDataBase = MealsLocalDataBaseImpl.getInstance(this.getContext());
+        ILoginRepository loginRepository = LoginRepository.getInstance(loginRemoteDataSource, userSavedCredentialsManager, mealsLocalDataBase);
         loginPresenter = new LoginPresenterImpl(this, loginRepository);
         navController = NavHostFragment.findNavController(this);
         progressBar = view.findViewById(R.id.progressBarLogin);

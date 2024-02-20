@@ -15,6 +15,8 @@ public class FavMealModel {
     @ColumnInfo(name = "image_link")
     private String imageLink;
 
+    public FavMealModel() {
+    }
 
     public FavMealModel(@NonNull String id, String name, String imageLink) {
         this.id = id;

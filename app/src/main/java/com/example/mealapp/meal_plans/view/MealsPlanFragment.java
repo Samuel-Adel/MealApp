@@ -184,7 +184,9 @@ public class MealsPlanFragment extends Fragment implements MealPlansView, OnPlan
         this.meal = randomMeal;
         isLoaded = true;
         randomMealName.setText(randomMeal.getName());
-        Glide.with(this).load(randomMeal.getImageLink()).override(120, 120).transform(new RoundedCorners(10)).centerCrop().into(randomMealImg);
+        if(this.getContext()!=null) {
+            Glide.with(this).load(randomMeal.getImageLink()).override(120, 120).transform(new RoundedCorners(10)).centerCrop().into(randomMealImg);
+        }
 
     }
 

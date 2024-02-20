@@ -54,14 +54,16 @@ public class LoginRemoteDataSourceImpl implements ILoginRemoteDataSource {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "signInWithEmail:success");
                     FirebaseUser user = mAuth.getCurrentUser();
-
+                    String[] parts = user.getEmail().split("@");
+                    String username = parts[0];
                     if (user != null) {
                         user.getIdToken(true).addOnSuccessListener(new OnSuccessListener<GetTokenResult>() {
                             @Override
                             public void onSuccess(GetTokenResult result) {
                                 String token = result.getToken();
                                 Log.i(TAG, "onSuccess: " + token);
-                                networkCallBacks.onSuccessfulCallBack(token);
+                                Log.i(TAG, "onSuccess: " + username);
+                                networkCallBacks.onSuccessfulCallBack(username);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -89,13 +91,16 @@ public class LoginRemoteDataSourceImpl implements ILoginRemoteDataSource {
                 if (task.isSuccessful()) {
                     Log.d(TAG, "signInWithCredential:success");
                     FirebaseUser user = mAuth.getCurrentUser();
+                    String[] parts = user.getEmail().split("@");
+                    String username = parts[0];
                     if (user != null) {
                         user.getIdToken(true).addOnSuccessListener(new OnSuccessListener<GetTokenResult>() {
                             @Override
                             public void onSuccess(GetTokenResult result) {
                                 String token = result.getToken();
                                 Log.i(TAG, "onSuccess: " + token);
-                                networkCallBacks.onSuccessfulCallBack(token);
+                                Log.i(TAG, "onSuccess: " + username);
+                                networkCallBacks.onSuccessfulCallBack(username);
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override

@@ -14,6 +14,7 @@ public interface IMealsLocalDataBase {
     void logOut();
 
     void insertMealPlan(Meal meal, Days day);
+    void insertMealPlan(Meal meal, String day);
 
     void deleteFavMeal(Meal product);
 
