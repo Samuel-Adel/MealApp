@@ -36,7 +36,7 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView2"
+            android:id="@+id/randomMealCardView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -115,7 +115,7 @@
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+            app:layout_constraintTop_toBottomOf="@+id/randomMealCardView" />
 
         <View
             android:id="@+id/saturdayDivider"
@@ -374,6 +374,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.493"
             app:layout_constraintStart_toStartOf="parent"
+            android:layout_gravity="center"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.527" />
 

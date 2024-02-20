@@ -26,7 +26,7 @@
             android:screenOrientation="portrait"
             android:exported="false" />
         <activity
-            android:name=".splash_screen.view.SplashScreenFragment"
+            android:name=".get_started.view.SplashScreenFragment"
             android:screenOrientation="portrait"
             android:exported="false" />
 

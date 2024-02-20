@@ -6,7 +6,7 @@
     app:startDestination="@id/splashScreenFragment">
     <fragment
         android:id="@+id/splashScreenFragment"
-        android:name="com.example.mealapp.splash_screen.view.SplashScreenFragment"
+        android:name="com.example.mealapp.get_started.view.SplashScreenFragment"
         android:label="SplashScreen"
         tools:layout="@layout/fragment_splash_screen">
         <action

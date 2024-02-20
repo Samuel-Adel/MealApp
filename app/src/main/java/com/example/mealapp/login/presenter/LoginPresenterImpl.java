@@ -20,6 +20,22 @@ public class LoginPresenterImpl implements ILoginPresenter, NetworkCallBacks {
     }
 
     @Override
+    public void loginWithGoogle() {
+
+    }
+
+    @Override
+    public void loginAsGuest() {
+        loginRepository.signInUserAsGuest();
+        loginView.loggedInAsGuest("Welcome as guest");
+    }
+
+    @Override
+    public void saveUserCredentials(String token) {
+        loginRepository.saveUserCredentials(token);
+    }
+
+    @Override
     public void onSuccessfulCallBack(String successMsg) {
         loginView.loggedInSuccessfully(successMsg);
     }

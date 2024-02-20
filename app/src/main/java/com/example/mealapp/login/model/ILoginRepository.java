@@ -4,4 +4,6 @@ import com.example.mealapp.network.NetworkCallBacks;
 
 public interface ILoginRepository {
     public void signInUser(NetworkCallBacks networkCallBacks,UserCredentials userCredentials);
+    public void signInUserAsGuest();
+    public void saveUserCredentials(String token);
 }

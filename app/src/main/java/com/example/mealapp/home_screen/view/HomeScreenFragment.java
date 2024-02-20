@@ -1,11 +1,13 @@
 package com.example.mealapp.home_screen.view;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +17,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -24,7 +27,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.mealapp.HomeActivity;
 import com.example.mealapp.MainActivity;
 import com.example.mealapp.R;
 import com.example.mealapp.db.MealsLocalDataBaseImpl;
@@ -39,6 +41,8 @@ import com.example.mealapp.home_screen.network.HomeRemoteDataSourceImpl;
 import com.example.mealapp.home_screen.network.IHomeRemoteDataSource;
 import com.example.mealapp.home_screen.presenter.HomeScreenPresenterImpl;
 import com.example.mealapp.meal_details.view.MealDetailsActivity;
+import com.example.mealapp.user.UserLoginType;
+import com.example.mealapp.user.UserType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,9 +59,6 @@ public class HomeScreenFragment extends Fragment implements OnFilterItemClickLis
     private HomeScreenFilterAdapter<Country> homeScreenCountryAdapter;
     private HomeScreenFilterAdapter<Ingredient> homeScreenIngredientAdapter;
     private HomeScreenMealsAdapter homeScreenMealsAdapter;
-    private Category category;
-    private Country country;
-    private Ingredient ingredient;
     private HomeScreenPresenterImpl homeScreenPresenter;
     private Disposable disposable;
     private RecyclerView recyclerViewFilter;
@@ -93,6 +94,11 @@ public class HomeScreenFragment extends Fragment implements OnFilterItemClickLis
         ImageView filter = view.findViewById(R.id.filterIconView);
         EditText editTextSearch = view.findViewById(R.id.editTextSearch);
         TextView logout = view.findViewById(R.id.logOutTextVie);
+        ConstraintLayout constraintLayout = view.findViewById(R.id.constraniedLayoutHomeScreen);
+        UserType userType = UserType.getInstance();
+        if (userType.getCurrentUserType() == UserLoginType.guestUser) {
+            logout.setText(R.string.login);
+        }
         progressBar = view.findViewById(R.id.progressBarHome);
         browseByTextView = view.findViewById(R.id.textViewBrowseByCategory);
         recyclerViewFilter = view.findViewById(R.id.recyclerViewFilter);
@@ -111,12 +117,24 @@ public class HomeScreenFragment extends Fragment implements OnFilterItemClickLis
             showPopUpMenu(v, filter);
         });
         logout.setOnClickListener(v -> {
-            homeScreenPresenter.logOut();
-            Toast.makeText(getContext(), "Logged out successfully", Toast.LENGTH_SHORT).show();
+            if (userType.getCurrentUserType() != UserLoginType.guestUser) {
+                homeScreenPresenter.logOut();
+                Toast.makeText(getContext(), "Logged out successfully", Toast.LENGTH_SHORT).show();
+            }
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
             getActivity().finish();
 
+        });
+        constraintLayout.setOnTouchListener((v, event) -> {
+            if (editTextSearch.hasFocus() && event.getAction() == MotionEvent.ACTION_DOWN) {
+                Rect outRect = new Rect();
+                editTextSearch.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    editTextSearch.clearFocus();
+                }
+            }
+            return false;
         });
         Observable<String> textChangeObservable = Observable.create(emitter -> {
             editTextSearch.addTextChangedListener(new TextWatcher() {
@@ -170,7 +188,6 @@ public class HomeScreenFragment extends Fragment implements OnFilterItemClickLis
 
     @Override
     public void changeFilterSelectedItemCategory(Category category) {
-        Toast.makeText(getContext(), category.getName(), Toast.LENGTH_SHORT).show();
         homeScreenPresenter.getMealsByCategory(category);
 
     }
@@ -183,12 +200,11 @@ public class HomeScreenFragment extends Fragment implements OnFilterItemClickLis
     @Override
     public void addMealToFav(Meal meal) {
         homeScreenPresenter.addMealToFavourites(meal);
-        Toast.makeText(getContext(), meal.getName(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Meal added to favourite", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showMealDetails(Meal meal) {
-        Toast.makeText(getContext(), meal.getId(), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(getActivity(), MealDetailsActivity.class);
         intent.putExtra("meal_id", meal.getId());
         startActivity(intent);

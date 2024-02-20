@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
@@ -39,12 +41,10 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-
 public class MealsPlanFragment extends Fragment implements MealPlansView, OnPlansMealClickListener {
 
     private IMealPlansPresenter mealPlansPresenter;
     private TextView randomMealName;
-    private Button addToFavBtn;
     private ImageView randomMealImg;
     private boolean isLoaded = false;
     private Meal meal;
@@ -140,8 +140,8 @@ public class MealsPlanFragment extends Fragment implements MealPlansView, OnPlan
 
         randomMealImg = view.findViewById(R.id.randomMealImage);
         randomMealName = view.findViewById(R.id.randomMealName);
-        addToFavBtn = view.findViewById(R.id.addToFavButtonMealPlans);
-
+        Button addToFavBtn = view.findViewById(R.id.addToFavButtonMealPlans);
+        CardView randomMealCardView = view.findViewById(R.id.randomMealCardView);
         progressBar = view.findViewById(R.id.mealPlansProgressBar);
         mealPlansPresenter.getRandomMeal();
         mealPlansPresenter.getSaturdayPlanMeals();
@@ -155,7 +155,17 @@ public class MealsPlanFragment extends Fragment implements MealPlansView, OnPlan
         addToFavBtn.setOnClickListener(v -> {
             if (isLoaded) {
                 mealPlansPresenter.addMealToFav(meal);
+                Toast.makeText(getContext(), "Meal added to favourite", Toast.LENGTH_SHORT).show();
+
             }
+        });
+        randomMealCardView.setOnClickListener(v -> {
+            if (isLoaded) {
+                Intent intent = new Intent(getActivity(), MealDetailsActivity.class);
+                intent.putExtra("meal_id", meal.getId());
+                startActivity(intent);
+            }
+
         });
 
         refresher.setOnClickListener(v -> {
@@ -180,7 +190,7 @@ public class MealsPlanFragment extends Fragment implements MealPlansView, OnPlan
 
     @Override
     public void showFailureMsg(String failureMsg) {
-
+        Toast.makeText(getContext(), failureMsg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -202,9 +212,7 @@ public class MealsPlanFragment extends Fragment implements MealPlansView, OnPlan
                         saturdayRecyclerView.setVisibility(View.GONE);
                         saturdayPlansAdapter.updateData(item);
                     }
-
                 }
-
         );
     }
 
@@ -314,7 +322,8 @@ public class MealsPlanFragment extends Fragment implements MealPlansView, OnPlan
 
     @Override
     public void onRemoveMealButtonClicked(Meal meal) {
-        Log.i("removed ITem", "onRemoveMealButtonClicked: "+meal.getMealDay());
+        Log.i("removed ITem", "onRemoveMealButtonClicked: " + meal.getMealDay());
+        Toast.makeText(getContext(), "Meal removed from " + meal.getMealDay() + " plan", Toast.LENGTH_SHORT).show();
         mealPlansPresenter.removeMealFromPlan(meal);
     }
 }

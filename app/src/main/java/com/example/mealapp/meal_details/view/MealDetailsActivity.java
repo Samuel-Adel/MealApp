@@ -182,24 +182,31 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
                 int itemId = item.getItemId();
                 if (itemId == R.id.monday) {
                     mealDetailsPresenter.addMealToPlan(meal, Days.monday);
+                    showAddToPlanToast(Days.monday.name());
                     return true;
                 } else if (itemId == R.id.tuesday) {
                     mealDetailsPresenter.addMealToPlan(meal, Days.tuesday);
+                    showAddToPlanToast(Days.tuesday.name());
                     return true;
                 } else if (itemId == R.id.wednesday) {
                     mealDetailsPresenter.addMealToPlan(meal, Days.wednesday);
+                    showAddToPlanToast(Days.wednesday.name());
                     return true;
                 } else if (itemId == R.id.thursday) {
                     mealDetailsPresenter.addMealToPlan(meal, Days.thursday);
+                    showAddToPlanToast(Days.tuesday.name());
                     return true;
                 } else if (itemId == R.id.friday) {
                     mealDetailsPresenter.addMealToPlan(meal, Days.friday);
+                    showAddToPlanToast(Days.friday.name());
                     return true;
                 } else if (itemId == R.id.saturday) {
                     mealDetailsPresenter.addMealToPlan(meal, Days.saturday);
+                    showAddToPlanToast(Days.saturday.name());
                     return true;
                 } else if (itemId == R.id.sunday) {
                     mealDetailsPresenter.addMealToPlan(meal, Days.sunday);
+                    showAddToPlanToast(Days.sunday.name());
                     return true;
                 } else {
                     return false;
@@ -208,6 +215,10 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
         });
 
         popup.show();
+    }
+    private void showAddToPlanToast(String msg){
+        Toast.makeText(this,"Added to "+msg+" plan", Toast.LENGTH_SHORT).show();
+
     }
 
 

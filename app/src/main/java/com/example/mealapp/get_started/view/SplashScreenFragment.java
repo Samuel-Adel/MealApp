@@ -1,4 +1,4 @@
-package com.example.mealapp.splash_screen.view;
+package com.example.mealapp.get_started.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,19 +9,27 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+
 import android.os.Handler;
 import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.example.mealapp.HomeActivity;
 import com.example.mealapp.R;
-import com.example.mealapp.login.model.UserSavedCredentialsManager;
+import com.example.mealapp.get_started.model.ISplashScreenRepository;
+import com.example.mealapp.get_started.model.SplashScreenRepository;
+import com.example.mealapp.get_started.presenter.ISplashScreenPresenter;
+import com.example.mealapp.get_started.presenter.SplashScreenPresenter;
+import com.example.mealapp.user.UserSavedCredentialsManager;
 
 
-public class SplashScreenFragment extends Fragment {
+public class SplashScreenFragment extends Fragment implements SplashScreenView {
 
     private UserSavedCredentialsManager userSavedCredentialsManager;
+    private ISplashScreenPresenter splashScreenPresenter;
+    private boolean hasLoggedInBefore;
 
     public SplashScreenFragment() {
         // Required empty public constructor
@@ -45,10 +53,13 @@ public class SplashScreenFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         NavController navController = NavHostFragment.findNavController(this);
         userSavedCredentialsManager = UserSavedCredentialsManager.getInstance(this.getContext());
+        ISplashScreenRepository splashScreenRepository = SplashScreenRepository.getInstance(userSavedCredentialsManager);
+        splashScreenPresenter = new SplashScreenPresenter(splashScreenRepository, this);
+        splashScreenPresenter.checkUserSavedToken();
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (userSavedCredentialsManager.getUserToken() != null) {
+                if (hasLoggedInBefore) {
                     Intent intent = new Intent(getActivity(), HomeActivity.class);
                     startActivity(intent);
                     getActivity().finish();
@@ -63,4 +74,9 @@ public class SplashScreenFragment extends Fragment {
     }
 
 
+    @Override
+    public void showIfUserLoggedInBefore(String value) {
+        hasLoggedInBefore = value != null;
+
+    }
 }

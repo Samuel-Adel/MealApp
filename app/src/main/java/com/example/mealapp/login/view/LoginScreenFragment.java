@@ -25,7 +25,7 @@ import com.example.mealapp.R;
 import com.example.mealapp.login.model.ILoginRepository;
 import com.example.mealapp.login.model.LoginRepository;
 import com.example.mealapp.login.model.UserCredentials;
-import com.example.mealapp.login.model.UserSavedCredentialsManager;
+import com.example.mealapp.user.UserSavedCredentialsManager;
 import com.example.mealapp.login.network.ILoginRemoteDataSource;
 import com.example.mealapp.login.network.LoginRemoteDataSourceImpl;
 import com.example.mealapp.login.presenter.ILoginPresenter;
@@ -39,7 +39,6 @@ public class LoginScreenFragment extends Fragment implements LoginView {
     private EditText password;
     private ProgressBar progressBar;
     private final String TAG = "Login";
-    private UserSavedCredentialsManager userSavedCredentialsManager;
 
     public LoginScreenFragment() {
     }
@@ -63,14 +62,16 @@ public class LoginScreenFragment extends Fragment implements LoginView {
         Button btnSignIn = view.findViewById(R.id.btnSignIn);
         TextView signUpTextView = view.findViewById(R.id.signUpTextView);
         ILoginRemoteDataSource loginRemoteDataSource = LoginRemoteDataSourceImpl.getInstance(getContext().getApplicationContext(), getActivity());
-        ILoginRepository loginRepository = LoginRepository.getInstance(loginRemoteDataSource);
+        UserSavedCredentialsManager userSavedCredentialsManager = UserSavedCredentialsManager.getInstance(this.getContext());
+        ILoginRepository loginRepository = LoginRepository.getInstance(loginRemoteDataSource, userSavedCredentialsManager);
         loginPresenter = new LoginPresenterImpl(this, loginRepository);
         navController = NavHostFragment.findNavController(this);
         progressBar = view.findViewById(R.id.progressBarLogin);
         email = view.findViewById(R.id.editTextEmailAddressLogin);
         password = view.findViewById(R.id.editTextPasswordLogin);
         ImageView googleIcon = view.findViewById(R.id.googleIconBtn);
-        userSavedCredentialsManager = UserSavedCredentialsManager.getInstance(this.getContext());
+        ImageView guestUser = view.findViewById(R.id.loginGuestUserImgVie);
+
         signUpTextView.setOnClickListener(v ->
                 navController.navigate(R.id.signupScreenFragment)
 
@@ -87,6 +88,9 @@ public class LoginScreenFragment extends Fragment implements LoginView {
         });
         googleIcon.setOnClickListener(v -> {
 
+        });
+        guestUser.setOnClickListener(v -> {
+            loginPresenter.loginAsGuest();
         });
 
     }
@@ -109,12 +113,20 @@ public class LoginScreenFragment extends Fragment implements LoginView {
 
     @Override
     public void loggedInSuccessfully(String userToken) {
-        userSavedCredentialsManager.saveUserToken(userToken);
+        loginPresenter.saveUserCredentials(userToken);
         Intent intent = new Intent(getActivity(), HomeActivity.class);
         startActivity(intent);
         /// TODO
 //// Finish the current activity to prevent returning to it when pressing back
 //        getActivity().finish();
+    }
+
+    @Override
+    public void loggedInAsGuest(String loggedInSuccessfullyMessage) {
+        Toast.makeText(getContext(), loggedInSuccessfullyMessage, Toast.LENGTH_SHORT).show();
+
+        Intent intent = new Intent(getActivity(), HomeActivity.class);
+        startActivity(intent);
     }
 
     @Override

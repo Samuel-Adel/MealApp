@@ -1,4 +1,4 @@
-package com.example.mealapp.login.model;
+package com.example.mealapp.user;
 
 import android.content.Context;
 import android.content.SharedPreferences;

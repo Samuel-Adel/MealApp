@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.mealapp.R;
-import com.example.mealapp.login.model.UserSavedCredentialsManager;
 
 public class GetStartedFragment extends Fragment {
 
@@ -50,4 +49,6 @@ public class GetStartedFragment extends Fragment {
             navController.navigate(R.id.loginScreenFragment);
         });
     }
+
+
 }
