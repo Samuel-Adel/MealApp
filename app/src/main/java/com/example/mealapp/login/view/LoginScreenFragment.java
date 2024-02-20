@@ -30,6 +30,17 @@ import com.example.mealapp.login.network.ILoginRemoteDataSource;
 import com.example.mealapp.login.network.LoginRemoteDataSourceImpl;
 import com.example.mealapp.login.presenter.ILoginPresenter;
 import com.example.mealapp.login.presenter.LoginPresenterImpl;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 
 public class LoginScreenFragment extends Fragment implements LoginView {
@@ -39,6 +50,10 @@ public class LoginScreenFragment extends Fragment implements LoginView {
     private EditText password;
     private ProgressBar progressBar;
     private final String TAG = "Login";
+    private GoogleSignInClient mGoogleSignInClient;
+    private static final int RC_SIGN_IN = 9001;
+
+    private FirebaseAuth mAuth;
 
     public LoginScreenFragment() {
     }
@@ -59,6 +74,12 @@ public class LoginScreenFragment extends Fragment implements LoginView {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(UserCredentials.googleLogin)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this.getActivity(), gso);
         Button btnSignIn = view.findViewById(R.id.btnSignIn);
         TextView signUpTextView = view.findViewById(R.id.signUpTextView);
         ILoginRemoteDataSource loginRemoteDataSource = LoginRemoteDataSourceImpl.getInstance(getContext().getApplicationContext(), getActivity());
@@ -71,14 +92,12 @@ public class LoginScreenFragment extends Fragment implements LoginView {
         password = view.findViewById(R.id.editTextPasswordLogin);
         ImageView googleIcon = view.findViewById(R.id.googleIconBtn);
         ImageView guestUser = view.findViewById(R.id.loginGuestUserImgVie);
-
         signUpTextView.setOnClickListener(v ->
                 navController.navigate(R.id.signupScreenFragment)
 
         );
 
         btnSignIn.setOnClickListener(v -> {
-            //   loggedInSuccessfully("Developing Option");
             if (validateInputs(email.getText().toString(), password.getText().toString())) {
                 loginPresenter.loginWithUserCredentials(new UserCredentials(email.getText().toString(), password.getText().toString()));
                 Log.i(TAG, "User Email" + email.getText().toString());
@@ -87,7 +106,7 @@ public class LoginScreenFragment extends Fragment implements LoginView {
 
         });
         googleIcon.setOnClickListener(v -> {
-
+            signIn();
         });
         guestUser.setOnClickListener(v -> {
             loginPresenter.loginAsGuest();
@@ -116,9 +135,7 @@ public class LoginScreenFragment extends Fragment implements LoginView {
         loginPresenter.saveUserCredentials(userToken);
         Intent intent = new Intent(getActivity(), HomeActivity.class);
         startActivity(intent);
-        /// TODO
-//// Finish the current activity to prevent returning to it when pressing back
-//        getActivity().finish();
+        getActivity().finish();
     }
 
     @Override
@@ -139,4 +156,26 @@ public class LoginScreenFragment extends Fragment implements LoginView {
         }
     }
 
+    private void signIn() {
+        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        startActivityForResult(signInIntent, RC_SIGN_IN);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
+                loginPresenter.loginWithGoogle(account.getIdToken());
+                //firebaseAuthWithGoogle(account.getIdToken());
+            } catch (ApiException e) {
+                // Google Sign In failed, update UI appropriately
+                Log.w(TAG, "Google sign in failed", e);
+            }
+        }
+    }
 }

@@ -6,11 +6,14 @@ import android.util.Log;
 import com.example.mealapp.home_screen.model.Meal;
 import com.example.mealapp.user.UserSavedCredentialsManager;
 import com.example.mealapp.meal_plans.model.Days;
+import com.example.mealapp.user.logout.Logout;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class MealsLocalDataBaseImpl implements IMealsLocalDataBase {
 
@@ -40,9 +43,21 @@ public class MealsLocalDataBaseImpl implements IMealsLocalDataBase {
 
     @Override
     public void logOut() {
+        String userToken = userSavedCredentialsManager.getUserToken();
+        mealsDAO.getAllFavMeals()
+                .firstOrError()
+                .flatMap(favMeals -> mealsDAO.getAllPlannedMeals()
+                        .flatMap(Flowable::fromIterable)
+                        .toList()
+                        .map(plannedMeals -> {
+                            Logout.saveUserDataToFirebase(userToken, favMeals, plannedMeals);
+                            return null;
+                        }))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe();
         new Thread(() -> appDataBase.clearAllTables()).start();
         userSavedCredentialsManager.clearUserToken();
-
     }
 
     @Override
@@ -74,6 +89,22 @@ public class MealsLocalDataBaseImpl implements IMealsLocalDataBase {
                 meals.add(meal);
             }
             Log.i("GettingFavMeals", "getFavMeals: ");
+            return meals;
+        });
+    }
+
+    @Override
+    public Flowable<List<Meal>> getAllPlannedMeals() {
+        return mealsDAO.getAllPlannedMeals().map(plannedMeals -> {
+            Log.i("GettingPlannedMeals", "GettingPlannedMeals: " + plannedMeals.toArray().length);
+
+            List<Meal> meals = new ArrayList<>();
+            for (PlannedMealModel plannedMealModel : plannedMeals) {
+                Meal meal = new Meal(plannedMealModel.getId(), plannedMealModel.getName(), plannedMealModel.getImageLink(), plannedMealModel.getMealDay() // Assuming all fav meals are marked as favorite
+                );
+                meals.add(meal);
+            }
+            Log.i("GettingPlannedMeals", "GettingPlannedMeals: ");
             return meals;
         });
     }

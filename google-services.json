@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "565663875855",
+    "firebase_url": "https://mealsapp-5bbc3-default-rtdb.firebaseio.com",
     "project_id": "mealsapp-5bbc3",
     "storage_bucket": "mealsapp-5bbc3.appspot.com"
   },
@@ -20,6 +21,10 @@
             "package_name": "com.example.mealapp",
             "certificate_hash": "30b6327d763491d56b29a905540afe8f18b1a3b2"
           }
+        },
+        {
+          "client_id": "565663875855-eqr7r31mfji9h7ug69v3helmbg7pod4g.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
@@ -31,7 +36,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "565663875855-g80l4e9glnu10aj04nauur2q1051cmtr.apps.googleusercontent.com",
+              "client_id": "565663875855-6tiip7t8h4l3ojp629od87u94d7a8l9h.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -1,7 +1,7 @@
 package com.example.mealapp.login.model;
 
 public class UserCredentials {
-    public static final String googleLogin = "1017035063127-s2t15996ln6i43aqfqfht3or1o3pog3p.apps.googleusercontent.com";
+    public static final String googleLogin = "565663875855-eqr7r31mfji9h7ug69v3helmbg7pod4g.apps.googleusercontent.com";
     private String userEmail;
     private String password;
 

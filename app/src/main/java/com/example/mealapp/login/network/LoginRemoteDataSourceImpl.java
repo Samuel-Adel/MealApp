@@ -26,12 +26,10 @@ import com.google.firebase.auth.GoogleAuthProvider;
 
 public class LoginRemoteDataSourceImpl implements ILoginRemoteDataSource {
     private static final String TAG = "LoginRemoteDataSource";
-    private Context context;
-    private Activity activity;
+
     public static LoginRemoteDataSourceImpl instance = null;
     private final FirebaseAuth mAuth;
-    private GoogleSignInClient mGoogleSignInClient;
-    private static final int RC_SIGN_IN = 9001;
+
 
     public static LoginRemoteDataSourceImpl getInstance(Context context, Activity activity) {
         if (instance == null) {
@@ -44,8 +42,6 @@ public class LoginRemoteDataSourceImpl implements ILoginRemoteDataSource {
     private LoginRemoteDataSourceImpl(Context context, Activity activity) {
         mAuth = FirebaseAuth.getInstance();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(UserCredentials.googleLogin).requestEmail().build();
-        mGoogleSignInClient = GoogleSignIn.getClient(context, gso);
-        this.activity = activity;
     }
 
     @Override
@@ -70,7 +66,6 @@ public class LoginRemoteDataSourceImpl implements ILoginRemoteDataSource {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                // Handle failure to retrieve token
                                 Log.e(TAG, "Failed to get token.", e);
                                 networkCallBacks.onFailureResult("Failed to get token.");
                             }
@@ -85,32 +80,38 @@ public class LoginRemoteDataSourceImpl implements ILoginRemoteDataSource {
         });
     }
 
-
-    private void firebaseAuthWithGoogle(String idToken) {
+    @Override
+    public void signUpWithGoogle(NetworkCallBacks networkCallBacks, String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success");
                     FirebaseUser user = mAuth.getCurrentUser();
+                    if (user != null) {
+                        user.getIdToken(true).addOnSuccessListener(new OnSuccessListener<GetTokenResult>() {
+                            @Override
+                            public void onSuccess(GetTokenResult result) {
+                                String token = result.getToken();
+                                Log.i(TAG, "onSuccess: " + token);
+                                networkCallBacks.onSuccessfulCallBack(token);
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Handle failure to retrieve token
+                                Log.e(TAG, "Failed to get token.", e);
+                                networkCallBacks.onFailureResult("Failed to get token.");
+                            }
+                        });
+                    }
                 } else {
-                    // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.getException());
+                    networkCallBacks.onFailureResult(task.getException().getMessage());
 
                 }
             }
         });
-    }
-
-    private void signIn() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        activity.startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
-
-    @Override
-    public void signUpWithGoogle(NetworkCallBacks networkCallBacks) {
-        signIn();
     }
 }

@@ -34,6 +34,11 @@ public class LoginRepository implements ILoginRepository {
     }
 
     @Override
+    public void signInUserWithGoogle(NetworkCallBacks networkCallBacks, String idToken) {
+        loginRemoteDataSource.signUpWithGoogle(networkCallBacks,idToken);
+    }
+
+    @Override
     public void signInUserAsGuest() {
         userType.setUserLoginType(UserLoginType.guestUser);
     }

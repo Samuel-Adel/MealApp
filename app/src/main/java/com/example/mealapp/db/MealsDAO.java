@@ -37,5 +37,6 @@ public interface MealsDAO {
 
     @Query("DELETE FROM planned_meals WHERE id = :id AND mealDay = :mealDay")
     void deletePlannedMealById(String id, String mealDay);
-
+    @Query("SELECT * FROM planned_meals")
+    Flowable<List<PlannedMealModel>> getAllPlannedMeals();
 }

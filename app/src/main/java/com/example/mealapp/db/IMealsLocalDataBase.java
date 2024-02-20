@@ -21,6 +21,7 @@ public interface IMealsLocalDataBase {
 
 
     Flowable<List<Meal>> getFavMeals();
+    Flowable<List<Meal>> getAllPlannedMeals();
 
     Flowable<Boolean> isFavMeal(String mealId);
 

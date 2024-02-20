@@ -20,8 +20,8 @@ public class LoginPresenterImpl implements ILoginPresenter, NetworkCallBacks {
     }
 
     @Override
-    public void loginWithGoogle() {
-
+    public void loginWithGoogle(String idToken) {
+        loginRepository.signInUserWithGoogle(this, idToken);
     }
 
     @Override
