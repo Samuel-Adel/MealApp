@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "565663875855",
+    "project_id": "mealsapp-5bbc3",
+    "storage_bucket": "mealsapp-5bbc3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565663875855:android:822ab7d303b7c34685b47a",
+        "android_client_info": {
+          "package_name": "com.example.mealapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPunMJM4kDkD3LzJjMBW9cCbO5fgpwwyE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

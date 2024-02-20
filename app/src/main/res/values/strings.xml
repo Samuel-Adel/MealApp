@@ -1,10 +1,45 @@
-
 <resources>
-    <string name="app_name">MealApp</string>
+    <string name="app_name">XFood</string>
     <string name="findAndGet">Find and Get</string>
     <string name="yourBest">Your Best</string>
     <string name="meal">Meal</string>
     <string name="getStarted">Get Started</string>
     <string name="findTheMost">Find the most delicious recipes </string>
-
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="appname">XFood</string>
+    <string name="email">Email</string>
+    <string name="enterYourEmail">Enter your email</string>
+    <string name="password">Password</string>
+    <string name="enterYourPassword">Enter your password</string>
+    <string name="signup">Sign up</string>
+    <string name="alreadyHaveAnAccount">Already have an account?</string>
+    <string name="login">Log In</string>
+    <string name="dontHaveAnAccount">Don\'t have an account?</string>
+    <string name="signin">Sign in</string>
+    <string name="youCanConnectWith">You can connect with</string>
+    <string name="home">Home</string>
+    <string name="favourite">Favourite</string>
+    <string name="search">Search</string>
+    <string name="BrowseByCategory">Browse By Category</string>
+    <string name="BrowseByCountry">Browse By Country</string>
+    <string name="BrowseByIngredient">Browse By Ingredient</string>
+    <string name="country">Country</string>
+    <string name="category">Category</string>
+    <string name="ingredient">Ingredient</string>
+    <string name="favMeals">Fav Meals</string>
+    <string name="yourFavMeals">Your Favourite Meals</string>
+    <string name="instructions">Instructions</string>
+    <string name="video">Video</string>
+    <string name="plans">Plans</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="addToFav">add to favourite</string>
+    <string name="removeFromFav">remove from favourite</string>
+    <string name="removeFromPlanButton">remove from plan</string>
+    <string name="logOut">Logout</string>
 </resources>
