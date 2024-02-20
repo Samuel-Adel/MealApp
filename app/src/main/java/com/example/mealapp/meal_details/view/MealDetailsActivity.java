@@ -83,7 +83,10 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
             }
         });
         isPlannedImageView.setOnClickListener(v -> {
-            showWeekdayMenu(v);
+            if (isLoaded) {
+                showWeekdayMenu(v);
+            }
+
         });
 
     }
@@ -216,8 +219,9 @@ public class MealDetailsActivity extends AppCompatActivity implements MealDetail
 
         popup.show();
     }
-    private void showAddToPlanToast(String msg){
-        Toast.makeText(this,"Added to "+msg+" plan", Toast.LENGTH_SHORT).show();
+
+    private void showAddToPlanToast(String msg) {
+        Toast.makeText(this, "Added to " + msg + " plan", Toast.LENGTH_SHORT).show();
 
     }
 
